@@ -5,3 +5,114 @@ input.form-control {
 body {
     padding-top: 36px;
 }
+
+.white {
+    top: 20px;
+    margin-top: 15px;
+    color: white;
+    margin-left: 35px;
+    font-size: 18px;
+}
+
+.plusSign {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 15px;
+    color: white;
+}
+
+.backSign {
+    position: absolute;
+    left: 5px;
+    top: 20px;
+    font-size: 15px;
+    color: white;
+}
+
+.itemIcon {
+    position: absolute;
+    right: 5px;
+    top: 15px;
+}
+
+.list-group-item {
+    color: #337ab7;
+    border: hidden;
+    margin-left: -5px;
+    margin-right: 15px;
+    margin-bottom: -5px;
+}
+
+.navbar.navbar-default.navbar-fixed-top {
+    bottom: 100%;
+    background-color: #337ab7;
+}
+
+.navbar.navbar-default.navbar-fixed-top.left {
+    left: 2%;
+    right: 68%;
+    bottom: 100%;
+    background-color: #337ab7;
+}
+
+.navbar.navbar-default.navbar-fixed-top.right {
+    margin-left:32%;
+    margin-right: 10%;
+    bottom: 100%;
+    background-color: #337ab7;
+}
+
+.navbar.navbar-default.navbar-fixed-bottom {
+    background-color: #337ab7;
+}
+
+.bs-glyphicons.glyphicon {
+    font-size: 24px;
+}
+
+.head {
+    color: white;
+}
+
+.yes {
+    color: white;
+    position: absolute;
+    right: 20px;
+    top: auto;
+    font-size: 15px;
+}
+
+.ok {
+    color: white;
+    position: absolute;
+    right: 20px;
+    top: 17px;
+    font-size: 15px;
+}
+
+.fixed-distance {
+    margin-top: 25px;
+    margin-left: -40px;
+}
+.fixed-width {
+    right: 50px;
+}
+
+.fixed-right-page-distance{
+    margin-top: 25px;
+}
+
+.form-control.large-input {
+    height: 100px;
+}
+
+.col-sm-4.line {
+    height: 90vh;
+    border-right-color: darkgrey;
+    border-right: medium solid;
+}
+
+.col-sm-7.fixed {
+    margin-left: 3%;
+}

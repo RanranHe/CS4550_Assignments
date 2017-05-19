@@ -107,6 +107,10 @@ body {
     height: 100px;
 }
 
+.form-control.sigle-line {
+    height: 35px;
+}
+
 .col-sm-4.line {
     height: 90vh;
     border-right-color: darkgrey;

@@ -63,6 +63,20 @@ body {
     background-color: #337ab7;
 }
 
+.navbar.navbar-default.navbar-fixed-top.left {
+    left: 2%;
+    right: 58%;
+    bottom: 100%;
+    background-color: #337ab7;
+}
+
+.navbar.navbar-default.navbar-fixed-top.right.wd{
+    margin-left:41%;
+    margin-right: 10%;
+    bottom: 100%;
+    background-color: #337ab7;
+}
+
 .navbar.navbar-default.navbar-fixed-bottom {
     background-color: #337ab7;
 }
@@ -73,14 +87,6 @@ body {
 
 .head {
     color: white;
-}
-
-.yes {
-    color: white;
-    position: absolute;
-    right: 20px;
-    top: auto;
-    font-size: 15px;
 }
 
 .ok {
@@ -117,6 +123,38 @@ body {
     border-right: medium solid;
 }
 
+.col-sm-5.line {
+    height: 100%;
+    border-right-color: darkgrey;
+    border-right: medium solid;
+    border-top: hidden;
+}
+
+.col-sm-6.fixed{
+    left: 3%;
+}
+
 .col-sm-7.fixed {
-    margin-left: 3%;
+    left: 3%;
+}
+
+.wd-widget {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.wd-toolbar {
+    position: absolute;
+    background-color: white;
+    top: 0px;
+    right: 0px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    border-bottom-left-radius: 10px;
+    opacity: 0.8;
+}
+
+.wd-push-up {
+    position: relative;
+    margin-bottom: 15%;
 }

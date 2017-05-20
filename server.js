@@ -1,14 +1,15 @@
-var app = require('./express');
+var express = require('express');
+var app = express();
 
-app.set('view engine', 'ejs');
-require('./utilities/filelist');
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(app.express.static(__dirname + '/public'));
+// configure a public directory to host static content
+app.use(express.static(__dirname + '/public'));
 
-var blog = require('./lectures/graduate/blog/app');
-blog(app);
+require ("./test/app.js")(app);
 
-var todo = require('./lectures/undergraduate/todo/app');
-todo(app);
+var port = process.env.PORT || 3000;
 
-app.listen(3000);
+app.listen(port);

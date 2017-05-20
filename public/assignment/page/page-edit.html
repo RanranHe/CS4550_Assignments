@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>New Website</title>
+    <title>Edit Page</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="../css/style.css" rel="stylesheet"/>
 </head>
@@ -10,15 +10,15 @@
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
     <p class="navbar-text pull-left">
-        <a href="website-list.html" class="navbar-link">
+        <a href="page-list.html" class="navbar-link">
             <span class="glyphicon glyphicon-chevron-left backSign"></span>
         </a>
     </p>
 
-    <p class="white">New Website</p>
+    <p class="white">Edit Page</p>
 
     <p class="navbar-text pull-right">
-        <a href="website-list.html" class="navbar-link">
+        <a href="page-list.html" class="navbar-link">
             <span class="glyphicon glyphicon-ok ok"></span>
         </a>
     </p>
@@ -26,9 +26,9 @@
 
 <div class="col-sm-4 line hidden-xs">
     <nav class="navbar navbar-default navbar-fixed-top left">
-        <p class="white">Website</p>
+        <p class="white">Pages</p>
         <p class="navbar-text pull-right">
-            <a href="website-new.html" class="navbar-link">
+            <a href="page-new.html" class="navbar-link">
                 <span class="glyphicon glyphicon-plus plusSign"></span>
             </a>
         </p>
@@ -36,26 +36,36 @@
 
     <ul class="fixed-distance">
         <li class="list-group-item">
-            <a href="../page/page-list.html">Address Book App</a>
-            <a href="website-edit.html">
+            <a href="page-list.html">Blog Post</a>
+            <a href="page-edit.html">
                 <span class="glyphicon glyphicon-cog itemIcon"></span>
             </a>
         </li>
+
         <li class="list-group-item">
-            <a href="../page/page-list.html">Blogger</a>
-            <a href="website-edit.html">
+            <a href="page-list.html">Blogs</a>
+            <a href="page-edit.html">
                 <span class="glyphicon glyphicon-cog itemIcon"></span>
             </a>
         </li>
+
         <li class="list-group-item">
-            <a href="../page/page-list.html">Blogging App</a>
-            <a href="website-edit.html">
+            <a href="page-list.html">Home</a>
+            <a href="page-edit.html">
                 <span class="glyphicon glyphicon-cog itemIcon"></span>
             </a>
         </li>
+
         <li class="list-group-item">
-            <a href="../page/page-list.html">Script Testing App</a>
-            <a href="website-edit.html">
+            <a href="page-list.html">About</a>
+            <a href="page-edit.html">
+                <span class="glyphicon glyphicon-cog itemIcon"></span>
+            </a>
+        </li>
+
+        <li class="list-group-item">
+            <a href="page-list.html">Contact us</a>
+            <a href="page-edit.html">
                 <span class="glyphicon glyphicon-cog itemIcon"></span>
             </a>
         </li>
@@ -65,25 +75,30 @@
 <div class="col-sm-7 fixed">
     <div class="hidden-xs">
         <nav class="navbar navbar-default navbar-fixed-top right">
-            <p class="white">New Website</p>
+            <p class="white">Edit Page</p>
         </nav>
     </div>
 
     <form class="fixed-right-page-distance">
         <div class="fixed-width">
-            <label for="website name">Website Name</label>
+            <label for="page name">Page Name</label>
             <input type="text"
                    class="form-control"
-                   id="website name"
-                   placeholder="Website Name">
+                   id="page name"
+                   placeholder="Page Name">
         </div>
 
         <div class="form-group">
-            <label for="website description">Website Description</label>
-            <textarea class="form-control large-input"
-                      id="website description">Website Description</textarea>
+            <label for="page title">Page Title</label>
+            <input type="text"
+                   class="form-control"
+                   id="page title"
+                   placeholder="Page Title">
         </div>
     </form>
+
+    <a class="btn btn-danger  btn-block"
+       href="page-list.html">Delete</a>
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">

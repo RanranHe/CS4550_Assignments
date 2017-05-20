@@ -110,6 +110,11 @@ body {
     margin-top: 25px;
     left: 10px;
 }
+
+.list {
+    margin-left: 30px;
+}
+
 .fixed-width {
     right: 50px;
 }

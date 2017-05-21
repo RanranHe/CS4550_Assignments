@@ -153,6 +153,10 @@ body {
     margin-bottom: 10px;
 }
 
+.wd-image-bottom {
+    margin-bottom: 11%;
+}
+
 .wd-toolbar {
     position: absolute;
     background-color: white;

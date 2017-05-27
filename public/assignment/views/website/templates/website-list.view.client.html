@@ -14,7 +14,7 @@
 <div class="container-fluid">
     <li ng-repeat="website in model.websites" class="list-group-item fixed-left">
         <div class="row">
-            <a href="../page/page-list.html">
+            <a href="#!/user/{{model.userId}}/website/{{website._id}}/page">
                 {{website.name}}
             </a>
             <a href="#!/user/{{model.userId}}/website/{{website._id}}">

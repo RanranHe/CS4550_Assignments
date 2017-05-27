@@ -1,0 +1,72 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <p class="navbar-text pull-left">
+        <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page"
+           class="navbar-link">
+            <span class="glyphicon glyphicon-chevron-left backSign"></span>
+        </a>
+    </p>
+
+    <p class="white">Pages</p>
+
+    <p class="navbar-text pull-right">
+        <a href="page-list.view.client.html" class="navbar-link">
+            <span class="glyphicon glyphicon-ok ok"></span>
+        </a>
+    </p>
+</nav>
+
+<div class="col-sm-4 line hidden-xs">
+    <nav class="navbar navbar-default navbar-fixed-top left">
+        <p class="white">New Page</p>
+        <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page"
+           class="navbar-link">
+            <span class="glyphicon glyphicon-chevron-left backSign down"></span>
+        </a>
+        <p class="navbar-text pull-right">
+            <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/new" class="navbar-link">
+                <span class="glyphicon glyphicon-plus plus"></span>
+            </a>
+        </p>
+    </nav>
+
+    <div class="container-fluid">
+        <li ng-repeat="page in model.pages" class="list-group-item fixed-left">
+            <div class="row">
+                <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{page._id}}/widget">
+                    {{page.name}}
+                </a>
+                <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{page._id}}">
+                    <span class="glyphicon glyphicon-cog pull-right"></span>
+                </a>
+            </div>
+        </li>
+    </div>
+</div>
+
+<div class="col-sm-7 fixed">
+    <div class="hidden-xs">
+        <nav class="navbar navbar-default navbar-fixed-top right">
+            <p class="white">New Page</p>
+        </nav>
+    </div>
+
+    <form class="fixed-right-page-distance">
+        <div class="fixed-width">
+            <label for="page name">Page Name</label>
+            <input type="text" class="form-control" id="page name" placeholder="Page Name">
+        </div>
+
+        <div class="form-group fixed-width">
+            <label for="page title">Page Title</label>
+            <input type="text" class="form-control" id="page title" placeholder="Page Title">
+        </div>
+    </form>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <p class="navbar-text pull-right">
+        <a href="#!/user/{{model.userId}}" class="navbar-link">
+            <span class="glyphicon glyphicon-plus glyphicon-user head"></span>
+        </a>
+    </p>
+</nav>

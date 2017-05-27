@@ -7,8 +7,8 @@ body {
 }
 
 .white {
-    top: 20px;
-    margin-top: 15px;
+    position: absolute;
+    margin-top: 12px;
     color: white;
     margin-left: 35px;
     font-size: 18px;
@@ -16,15 +16,15 @@ body {
 
 .plusSign {
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 40px;
+    margin-top: 15px;
     font-size: 15px;
     color: white;
 }
 
 .backSign {
     position: absolute;
-    left: 5px;
+    margin-left: 5px;
     top: 20px;
     font-size: 15px;
     color: white;
@@ -55,24 +55,25 @@ body {
 .navbar.navbar-default.navbar-fixed-top {
     bottom: 100%;
     background-color: #337ab7;
+    background-image: none;
 }
 
 .navbar.navbar-default.navbar-fixed-top.left {
-    left: 2%;
+    margin-left: 1%;
     right: 68%;
     bottom: 100%;
     background-color: #337ab7;
 }
 
+
 .navbar.navbar-default.navbar-fixed-top.right {
-    margin-left:32%;
+    margin-left:35%;
     margin-right: 10%;
     bottom: 100%;
     background-color: #337ab7;
 }
 
 .navbar.navbar-default.navbar-fixed-top.left {
-    left: 2%;
     right: 58%;
     bottom: 100%;
     background-color: #337ab7;
@@ -87,6 +88,7 @@ body {
 
 .navbar.navbar-default.navbar-fixed-bottom {
     background-color: #337ab7;
+    background-image: none;
 }
 
 .bs-glyphicons.glyphicon {
@@ -102,8 +104,13 @@ body {
     color: white;
     position: absolute;
     right: 20px;
-    top: 17px;
+    margin-top: 2px;
     font-size: 15px;
+}
+
+.alert.alert-danger {
+    box-sizing: border-box;
+    color: red;
 }
 
 .fixed-distance {
@@ -128,6 +135,7 @@ body {
 }
 
 .col-sm-4.line {
+    margin-top: -15px;
     height: 90vh;
     border-right-color: darkgrey;
     border-right: medium solid;
@@ -171,4 +179,24 @@ body {
 .wd-push-up {
     position: relative;
     margin-bottom: 15%;
+}
+
+.btn-fixed {
+    margin-top: 10px;
+}
+
+.fixed-left {
+    margin-left: 15px;
+}
+
+.plus {
+    position: absolute;
+    margin-right: 90px;
+    margin-top: 2px;
+    font-size: 15px;
+    color: white;
+}
+
+.backSign.down {
+    margin-top: 15px;
 }

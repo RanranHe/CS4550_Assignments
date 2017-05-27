@@ -1,16 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>New Website</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="../css/style.css" rel="stylesheet"/>
-</head>
-
-<body>
 <nav class="navbar navbar-default navbar-fixed-top">
     <p class="navbar-text pull-left">
-        <a href="website-list.html" class="navbar-link">
+        <a href="#!/user/{{model.userId}}/website" class="navbar-link">
             <span class="glyphicon glyphicon-chevron-left backSign"></span>
         </a>
     </p>
@@ -18,7 +8,7 @@
     <p class="white">New Website</p>
 
     <p class="navbar-text pull-right">
-        <a href="website-list.html" class="navbar-link">
+        <a ng-click="model.createWebsite(name, description)" class="navbar-link">
             <span class="glyphicon glyphicon-ok ok"></span>
         </a>
     </p>
@@ -27,45 +17,37 @@
 <div class="col-sm-4 line hidden-xs">
     <nav class="navbar navbar-default navbar-fixed-top left">
         <p class="white">Website</p>
+        <a href="#!/user/{{model.userId}}/website" class="navbar-link">
+            <span class="glyphicon glyphicon-chevron-left backSign backSign down"></span>
+        </a>
         <p class="navbar-text pull-right">
-            <a href="website-new.html" class="navbar-link">
+            <a href="website-new.view.client.html" class="navbar-link">
                 <span class="glyphicon glyphicon-plus plusSign"></span>
             </a>
         </p>
     </nav>
 
-    <ul class="fixed-distance">
-        <li class="list-group-item">
-            <a href="../page/page-list.html">Address Book App</a>
-            <a href="website-edit.html">
-                <span class="glyphicon glyphicon-cog itemIcon"></span>
-            </a>
+    <div class="container-fluid">
+        <li ng-repeat="website in model.websites" class="list-group-item fixed-left">
+            <div class="row">
+                <a href="../page/page-list.html">
+                    {{website.name}}
+                </a>
+                <a href="#!/user/{{model.userId}}/website/{{website._id}}">
+                    <span class="glyphicon glyphicon-cog pull-right"></span>
+                </a>
+            </div>
         </li>
-        <li class="list-group-item">
-            <a href="../page/page-list.html">Blogger</a>
-            <a href="website-edit.html">
-                <span class="glyphicon glyphicon-cog itemIcon"></span>
-            </a>
-        </li>
-        <li class="list-group-item">
-            <a href="../page/page-list.html">Blogging App</a>
-            <a href="website-edit.html">
-                <span class="glyphicon glyphicon-cog itemIcon"></span>
-            </a>
-        </li>
-        <li class="list-group-item">
-            <a href="../page/page-list.html">Script Testing App</a>
-            <a href="website-edit.html">
-                <span class="glyphicon glyphicon-cog itemIcon"></span>
-            </a>
-        </li>
-    </ul>
+    </div>
 </div>
 
 <div class="col-sm-7 fixed">
     <div class="hidden-xs">
         <nav class="navbar navbar-default navbar-fixed-top right">
             <p class="white">New Website</p>
+            <a href="#!/user/{{model.userId}}/website/new" class="navbar-link">
+                <span class="glyphicon glyphicon-plus plusSign"></span>
+            </a>
         </nav>
     </div>
 
@@ -73,14 +55,16 @@
         <div class="fixed-width">
             <label for="name">Name</label>
             <input type="text"
+                   ng-model="name"
                    class="form-control"
                    id="name"
                    placeholder="Name">
         </div>
 
-        <div class="form-group">
+        <div class="form-group fixed-width">
             <label for="description">Description</label>
             <textarea class="form-control large-input"
+                      ng-model="description"
                       placeholder="Description"
                       id="description">Description</textarea>
         </div>
@@ -89,10 +73,8 @@
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <p class="navbar-text pull-right">
-        <a href="../user/profile.html" class="navbar-link">
+        <a href="#!/user/{{model.userId}}" class="navbar-link">
             <span class="glyphicon glyphicon-plus glyphicon-user head"></span>
         </a>
     </p>
 </nav>
-</body>
-</html>

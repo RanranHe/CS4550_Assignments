@@ -1,0 +1,45 @@
+<div class="fixed-distance list fixed-width">
+    <div>
+        <label for="wd name">Name</label>
+        <input type="text"
+               class="form-control"
+               id="wd name"
+               ng-model="model.widget.name"
+               placeholder="Name">
+    </div>
+
+    <div class="form-group">
+        <label for="text">Text</label>
+        <textarea class="form-control large-input"
+                  id="text"
+                  ng-model="model.widget.text"
+                  placeholder="Text"></textarea>
+    </div>
+
+    <div>
+        <label for="url">URL</label>
+        <input type="url"
+               class="form-control"
+               id="url"
+               placeholder="Image URL"
+               ng-model="model.widget.url">
+    </div>
+
+    <div>
+        <label for="width">Width</label>
+        <input type="text"
+               class="form-control"
+               id="width"
+               ng-model="model.widget.width"
+               placeholder="Width">
+    </div>
+
+    <div>
+        <label for="file">Upload</label>
+        <input type="file"
+               class="form-control"
+               id="file"
+               placeholder="File"
+               value="No file selected">
+    </div>
+</div>

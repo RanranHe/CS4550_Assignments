@@ -1,0 +1,33 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <p class="navbar-text pull-left">
+        <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="navbar-link">
+            <span class="glyphicon glyphicon-chevron-left backSign"></span>
+        </a>
+    </p>
+
+    <p class="white">Edit Widget</p>
+
+    <p class="navbar-text pull-right">
+        <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new"
+           class="navbar-link">
+            <span class="glyphicon glyphicon-plus pageList-plusSign"></span>
+        </a>
+    </p>
+</nav>
+
+<div ng-include="model.getTemplate(model.widgets.widgetType)"></div>
+
+<div class="fixed-width list wd-image-bottom">
+    <a class="btn btn-primary  btn-block"
+       ng-click="model.updateWidget()">Update</a>
+    <a class="btn btn-danger  btn-block"
+       ng-click="model.deleteWidget()">Delete</a>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <p class="navbar-text pull-right">
+        <a href="#!/user/{{model.userId}}" class="navbar-link" class="navbar-link">
+            <span class="glyphicon glyphicon-plus glyphicon-user head"></span>
+        </a>
+    </p>
+</nav>

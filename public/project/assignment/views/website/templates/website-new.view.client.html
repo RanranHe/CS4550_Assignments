@@ -1,0 +1,79 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <p class="navbar-text pull-left">
+        <a href="#!/user/{{model.userId}}/website" class="navbar-link">
+            <span class="glyphicon glyphicon-chevron-left backSign"></span>
+        </a>
+    </p>
+
+    <p class="white">New Website</p>
+
+    <p class="navbar-text pull-right">
+        <a href=""
+           ng-click="model.createWebsite(name, description)"
+           class="navbar-link">
+            <span class="glyphicon glyphicon-ok ok"></span>
+        </a>
+    </p>
+</nav>
+
+<div class="col-sm-4 line hidden-xs">
+    <nav class="navbar navbar-default navbar-fixed-top left">
+        <p class="white">Website</p>
+        <a href="#!/user/{{model.userId}}/website" class="navbar-link">
+            <span class="glyphicon glyphicon-chevron-left backSign backSign down"></span>
+        </a>
+        <p class="navbar-text pull-right">
+            <a href="#!/user/{{model.userId}}/website/new" class="navbar-link">
+                <span class="glyphicon glyphicon-plus plus"></span>
+            </a>
+        </p>
+    </nav>
+
+    <div class="container-fluid">
+        <li ng-repeat="website in model.websites" class="list-group-item fixed-left">
+            <div class="row">
+                <a href="../page/page-list.html">
+                    {{website.name}}
+                </a>
+                <a href="#!/user/{{model.userId}}/website/{{website._id}}">
+                    <span class="glyphicon glyphicon-cog pull-right"></span>
+                </a>
+            </div>
+        </li>
+    </div>
+</div>
+
+<div class="col-sm-7 fixed">
+    <div class="hidden-xs">
+        <nav class="navbar navbar-default navbar-fixed-top right">
+            <p class="white">New Website</p>
+        </nav>
+    </div>
+
+    <form class="fixed-right-page-distance">
+        <div class="fixed-width">
+            <label for="name">Name</label>
+            <input type="text"
+                   ng-model="name"
+                   class="form-control"
+                   id="name"
+                   placeholder="Name">
+        </div>
+
+        <div class="form-group fixed-width">
+            <label for="description">Description</label>
+            <textarea class="form-control large-input"
+                      ng-model="description"
+                      placeholder="Description"
+                      id="description">Description</textarea>
+        </div>
+    </form>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <p class="navbar-text pull-right">
+        <a href="#!/user/{{model.userId}}" class="navbar-link">
+            <span class="glyphicon glyphicon-plus glyphicon-user head"></span>
+        </a>
+    </p>
+</nav>

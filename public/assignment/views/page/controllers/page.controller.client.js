@@ -55,14 +55,15 @@
         }
         init();
 
-        function createPage(name, title) {
+        function createPage(name, description) {
             var newPage = {
-                _id: (new Date()).getTime(),
+                _id: (new Date()).getTime() + "",
                 name: name,
                 websiteId: model.websiteId,
-                title: title
+                description: description
             };
-            PageService.createPage(model.userId, newPage);
+            console.log(newPage);
+            PageService.createPage(model.websiteId, newPage);
             $location.url('/user/' + model.userId + '/website/' + model.websiteId + '/page/');
         }
     }

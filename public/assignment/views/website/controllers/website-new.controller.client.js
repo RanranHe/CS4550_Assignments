@@ -16,9 +16,9 @@
 
         function createWebsite(name, description) {
             var newWebsite = {
-                _id: (new Date()).getTime(),
+                _id: (new Date()).getTime() + "",
                 name: name,
-                developerId: model.uid,
+                developerId: model.userId,
                 description: description
             };
             console.log(newWebsite);

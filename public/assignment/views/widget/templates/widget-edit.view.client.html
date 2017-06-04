@@ -15,11 +15,11 @@
     </p>
 </nav>
 
-<div ng-include="model.getTemplate(model.widgets.widgetType)"></div>
+<div ng-include="model.getTemplate(model.widget.widgetType)"></div>
 
 <div class="fixed-width list wd-image-bottom">
     <a class="btn btn-primary  btn-block"
-       ng-click="model.updateWidget()">Update</a>
+       ng-click="model.updateWidget()">Submit</a>
     <a class="btn btn-danger  btn-block"
        ng-click="model.deleteWidget()">Delete</a>
 </div>

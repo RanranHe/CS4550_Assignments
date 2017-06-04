@@ -14,8 +14,11 @@
     </div>
 </nav>
 
+<div ng-show="model.error" class="alert alert-success">
+    {{model.error}}
+</div>
 
-<div class="container">
+<div class="container fixed-distance">
     <form class="fixed-distance">
         <div class="form-group">
             <label for="username">Username</label>
@@ -55,11 +58,13 @@
        href="#!/user/{{model.user._id}}/website">Websites</a>
     <a class="btn btn-danger  btn-block"
        href="#!/login">Logout</a>
+    <a class="btn btn-warning  btn-block"
+       ng-click="model.deleteUser()">Delete</a>
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <p class="navbar-text pull-right">
-        <a href="" class="navbar-link">
+        <a href="#!/user/{{model.user._id}}" class="navbar-link">
             <span class="glyphicon glyphicon-user head"></span>
         </a>
     </p>

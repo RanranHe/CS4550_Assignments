@@ -7,24 +7,39 @@
         var model = this;
         model.userId = $routeParams['uid'];
         model.websiteId = $routeParams['wid'];
+
         model.updateWebsite = updateWebsite;
-        model.deleteWebsite  = deleteWebsite;
+        model.deleteWebsite = deleteWebsite;
 
         function init() {
-            model.websites = websiteService.findAllWebsitesForUser(model.userId);
-            model.website = websiteService.findWebsiteById(model.websiteId);
+            websiteService
+                .findAllWebsitesForUser(model.userId)
+                .then(function (websites) {
+                    model.websites = websites;
+                });
+            websiteService
+                .findWebsiteById(model.websiteId)
+                .then(function (website) {
+                    model.website = website;
+                });
         }
+
         init();
 
         function updateWebsite() {
-            var result = websiteService.updateWebsite(model.websiteId, model.website);
-            $location.url('/user/' + model.userId + '/website/');
-
+            websiteService
+                .updateWebsite(model.websiteId, model.website)
+                .then(function () {
+                    $location.url('/user/' + model.userId + '/website');
+                });
         }
 
         function deleteWebsite() {
-            websiteService.deleteWebsite(model.websiteId);
-            $location.url('/user/' + model.userId + '/website/');
+            websiteService
+                .deleteWebsite(model.websiteId)
+                .then(function () {
+                    $location.url('/user/' + model.userId + '/website');
+                });
         }
     }
 })();

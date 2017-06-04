@@ -8,28 +8,41 @@
         var model = this;
 
         // event handlers
-        model.register = register;
-
-        // implementation
-        function register(username, password, password2) {
-
-            if(password !== password2) {
-                model.error = "Passwords must match";
+        model.register = function (username, password, password2) {
+            if (username === null || username === '' || typeof username === 'undefined') {
+                model.error = 'Invalid Empty Username!';
                 return;
             }
 
-            var found = userService.findUserByUsername(username);
+            if (password === null || password === '' || typeof password === 'undefined'
+            || password2 === null || password2 === '' || typeof password2 === 'undefined') {
+                model.error = 'Password cannot be empty!';
+                return;
+            }
 
-            if(found !== null) {
-                model.error = "Username is not available";
-            } else {
-                var user = {
-                    username: username,
-                    password: password
-                };
-                // model.message = user;
-                userService.createUser(user);
-                $location.url('/user/' + user._id);
+            if (password !== password2) {
+                model.error = "Passwords not match!";
+                return;
+            }
+            userService
+                .findUserByUsername(username)
+                .then(checkUser);
+
+            function checkUser(user) {
+                if (user) {
+                    model.error = "Username not available."
+                } else {
+                    var newUser = {
+                        username: username,
+                        password: password
+                    };
+
+                    userService
+                        .createUser(newUser)
+                        .then(function (user) {
+                           $location.url("/user/" + user._id);
+                        });
+                }
             }
         }
     }

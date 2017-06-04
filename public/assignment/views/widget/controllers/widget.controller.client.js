@@ -2,9 +2,6 @@
  * Created by Ranran on 2017/5/28.
  */
 (function () {
-    // $(document).ready(function () {
-    //     $('select').material_select();
-    // });
     angular
         .module("WebAppMaker")
         .controller("WidgetListController", WidgetListController)
@@ -22,8 +19,13 @@
         model.widgetId = $routeParams['wgid'];
 
         function init() {
-            model.widgets = WidgetService.findWidgetsByPageId(model.pageId);
+            WidgetService
+                .findWidgetsByPageId(model.pageId)
+                .then(function (widgets) {
+                    model.widgets = widgets;
+                });
         }
+
         init();
 
         function getHtml(widget) {
@@ -37,6 +39,7 @@
             var url = "https://www.youtube.com/embed/" + id;
             return $sce.trustAsResourceUrl(url);
         }
+
     }
 
     function WidgetChooserController($location, $routeParams, WidgetService) {
@@ -48,19 +51,27 @@
         model.createWidget = createWidget;
 
         function init() {
-            model.widgets = WidgetService.findWidgetsByPageId(model.pageId);
+            WidgetService
+                .findWidgetsByPageId(model.pageId)
+                .then(function (widgets) {
+                    model.widgets = widgets;
+                });
         }
+
         init();
 
         function createWidget(widgetType) {
             var newWidget = {
-                _id: (new Date()).getTime(),
+                _id: (new Date()).getTime() + "",
                 name: "",
                 widgetType: widgetType,
                 pageId: model.pageId
             };
-            WidgetService.createWidget(model.pageId, newWidget);
+
+            WidgetService
+                .createWidget(model.pageId, newWidget);
             $location.url("/user/" + model.userId + "/website/" + model.websiteId + "/page/" + model.pageId + "/widget/" + newWidget._id);
+            return newWidget;
         }
     }
 
@@ -70,30 +81,54 @@
         model.websiteId = $routeParams['wid'];
         model.pageId = $routeParams['pid'];
         model.widgetId = $routeParams['wgid'];
+
         model.deleteWidget = deleteWidget;
         model.updateWidget = updateWidget;
         model.getTemplate = getTemplate;
 
         function init() {
-            model.widget = WidgetService.findWidgetById(model.widgetId);
-            model.widgets = WidgetService.findWidgetsByPageId(model.pageId);
-            console.log(model.widget)
+            WidgetService
+                .findWidgetsByPageId(model.pageId)
+                .then(function (widgets) {
+                    model.widgets = widgets;
+                });
+
+            WidgetService
+                .findWidgetById(model.widgetId)
+                .then(function (widget) {
+                    model.widget = widget;
+                });
         }
+
         init();
 
         function getTemplate(widgetType) {
-            var template = 'views/widget/templates/widget-' + model.widget.widgetType.toLowerCase() + '.html';
+            if (widgetType === "HEADING") {
+                var template = 'views/widget/templates/widget-heading.html';
+            }
+            if (widgetType === "IMAGE") {
+                var template = 'views/widget/templates/widget-image.html';
+            }
+            if (widgetType === "YOUTUBE") {
+                var template = 'views/widget/templates/widget-youtube.html';
+            }
             return template;
         }
 
         function deleteWidget() {
-            WidgetService.deleteWidget(model.widgetId);
-            $location.url('/user/' + model.userId + '/website/' + model.websiteId + '/page/' + model.pageId + /widget/);
+            WidgetService
+                .deleteWidget(model.widgetId)
+                .then(function () {
+                    $location.url('/user/' + model.userId + '/website/' + model.websiteId + '/page/' + model.pageId + /widget/);
+                });
         }
 
         function updateWidget() {
-            var result = WidgetService.updateWidget(model.widgetId, model.widget);
-            $location.url('/user/' + model.userId + '/website/' + model.websiteId + '/page/' + model.pageId + /widget/);
+            WidgetService
+                .updateWidget(model.widgetId, model.widget)
+                .then(function () {
+                    $location.url('/user/' + model.userId + '/website/' + model.websiteId + '/page/' + model.pageId + /widget/);
+                });
         }
     }
 })();

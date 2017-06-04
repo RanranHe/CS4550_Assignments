@@ -7,11 +7,16 @@
         var model = this;
 
         model.userId = $routeParams['uid'];
-        model.createWebsite  = createWebsite;
+        model.createWebsite = createWebsite;
 
         function init() {
-            model.websites = websiteService.findAllWebsitesForUser(model.userId);
+            websiteService
+                .findAllWebsitesForUser(model.userId)
+                .then(function (websites) {
+                    model.websites = websites;
+                });
         }
+
         init();
 
         function createWebsite(name, description) {
@@ -21,9 +26,12 @@
                 developerId: model.userId,
                 description: description
             };
-            console.log(newWebsite);
-            websiteService.createWebsite(model.userId, newWebsite);
-            $location.url('/user/' + model.userId + '/website/');
+
+            websiteService
+                .createWebsite(model.userId, newWebsite)
+                .then(function () {
+                    $location.url('/user/' + model.userId + '/website/');
+                });
         }
     }
 })();

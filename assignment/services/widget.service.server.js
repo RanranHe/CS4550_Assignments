@@ -5,6 +5,7 @@ module.exports = function (app) {
     app.get("/api/widget/:widgetId", findWidgetById);
     app.put("/api/widget/:widgetId", updateWidget);
     app.delete("/api/widget/:widgetId", deleteWidget);
+    app.put('/page/:pageId/widget', sortWidget);
 
     widgets = [
         { "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
@@ -64,6 +65,25 @@ module.exports = function (app) {
                 res.sendStatus(200);
             }
         }
+    }
+
+    function sortWidget(req, res) {
+        var storedWidgets = [];
+
+        var initial = req.query['initial'];
+        var final = req.query['final'];
+
+        for (var i = widgets.length - 1; i >= 0; i--) {
+            if (widgets[i].pageId === req.params.pageId) {
+                storedWidgets.unshift(widgets[i]);
+                widgets.splice(i, 1);
+            }
+        }
+        var widget = storedWidgets[initial];
+        storedWidgets.splice(initial, 1);
+        storedWidgets.splice(final, 0, widget);
+        widgets = widgets.concat(storedWidgets);
+        res.sendStatus(200);
     }
 
 };

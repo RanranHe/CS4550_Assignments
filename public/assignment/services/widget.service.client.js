@@ -6,13 +6,14 @@
         .module("WebAppMaker")
         .factory("WidgetService", WidgetService);
 
-    function WidgetService($http) {
+    function WidgetService($routeParams, $http) {
         return {
             findWidgetsByPageId: findWidgetsByPageId,
             findWidgetById:findWidgetById,
             createWidget:createWidget,
             updateWidget:updateWidget,
-            deleteWidget:deleteWidget
+            deleteWidget:deleteWidget,
+            sortWidget: sortWidget
         };
 
         function findWidgetById(widgetId) {
@@ -67,6 +68,11 @@
                 .then(function (response) {
                     return response.data;
                 });
+        }
+
+        function sortWidget (initial, final) {
+            var url = "/page/"+ $routeParams['pid'] + "/widget?initial=" + initial + "&final=" + final;
+            return $http.put(url);
         }
     }
 })();

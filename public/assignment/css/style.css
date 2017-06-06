@@ -217,4 +217,14 @@ body {
     color:white;
 }
 
+/*Flickr Search*/
+.flickr-list.margin {
+    margin-right: 1%;
+    margin-left: 1px;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
 
+.flickr-photo {
+    margin-bottom: 5px;
+}

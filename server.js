@@ -6,11 +6,6 @@ var app = express();
 var bodyParser = require('body-parser');
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencooded({ extended: true }));
-
-
-//
-//
-//
 // app.use(app.express.static(__dirname + '/public'));
 //
 // require ("./test/app.js")(app);

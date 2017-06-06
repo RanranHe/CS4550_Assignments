@@ -116,21 +116,16 @@ body {
 .fixed-distance {
     margin-bottom: 20px;
     left: 10px;
-<<<<<<< HEAD
 }
 
 .list {
     margin-left: 30px;
 }
 
-=======
-}
-
 .list {
     margin-left: 30px;
 }
 
->>>>>>> github/master
 .fixed-width {
     margin-right: 50px;
 }
@@ -226,7 +221,6 @@ body {
     color:white;
 }
 
-<<<<<<< HEAD
 /*Flickr Search*/
 .flickr-list.margin {
     margin-right: 1%;
@@ -238,6 +232,3 @@ body {
 .flickr-photo {
     margin-bottom: 5px;
 }
-=======
-
->>>>>>> github/master

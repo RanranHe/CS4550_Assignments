@@ -55,7 +55,7 @@
                 </div>
 
                 <div>
-                    <img ng-src="{{widget.url}}" width="100%">
+                    <img ng-src="{{widget.url}}" width="{{widget.width}}">
                 </div>
             </li>
 
@@ -87,7 +87,7 @@
                     </div>
                 </div>
 
-                <iframe width="100%"
+                <iframe width="{{widget.width}}"
                         ng-src="{{model.getUrl(widget)}}"
                         frameborder="0"
                         allowfullscreen></iframe>

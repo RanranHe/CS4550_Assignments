@@ -9,10 +9,10 @@
     function WidgetService($routeParams, $http) {
         return {
             findWidgetsByPageId: findWidgetsByPageId,
-            findWidgetById: findWidgetById,
-            createWidget: createWidget,
-            updateWidget: updateWidget,
-            deleteWidget: deleteWidget,
+            findWidgetById:findWidgetById,
+            createWidget:createWidget,
+            updateWidget:updateWidget,
+            deleteWidget:deleteWidget,
             sortWidget: sortWidget
         };
 
@@ -49,10 +49,10 @@
         }
 
         function updateWidget(widgetId, widget) {
-            var url = "/api/widget/" + widgetId;
+            var url ="/api/widget/" + widgetId;
             var data = {
-                widgetId: widgetId,
-                widget: widget
+                widgetId:widgetId,
+                widget:widget
             };
             return $http
                 .put(url, data)
@@ -62,7 +62,7 @@
         }
 
         function deleteWidget(widgetId) {
-            var url = "/api/widget/" + widgetId;
+            var url ="/api/widget/"+widgetId;
             return $http
                 .delete(url)
                 .then(function (response) {
@@ -70,8 +70,8 @@
                 });
         }
 
-        function sortWidget(initial, final) {
-            var url = "/page/" + $routeParams['pid'] + "/widget?initial=" + initial + "&final=" + final;
+        function sortWidget (initial, final) {
+            var url = "/page/"+ $routeParams['pid'] + "/widget?initial=" + initial + "&final=" + final;
             return $http.put(url);
         }
     }

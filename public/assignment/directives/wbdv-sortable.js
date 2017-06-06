@@ -9,6 +9,24 @@
     function wdDraggable(WidgetService) {
         var initial = -1;
         var final = -1;
+
+        function linkFunction(scope, element) {
+            $(element).sortable(
+                {
+                    axis: "y",
+                    scroll: false,
+                    start: function (event, ui) {
+                        initial = ui.item.index();
+                    },
+                    stop: function (event, ui) {
+                        final = ui.item.index();
+                        WidgetService
+                            .sortWidget(initial, final);
+                    }
+                }
+            )
+        }
+
         function linkFunction(scope, element){
             $(element).sortable(
                 {

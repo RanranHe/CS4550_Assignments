@@ -1,4 +1,4 @@
-module.exports = function (app) {
+module.exports = function (app, models) {
 
     app.get('/api/website/:websiteId/page', findAllPagesForWebsite);
     app.post("/api/website/:websiteId/page", createPage);

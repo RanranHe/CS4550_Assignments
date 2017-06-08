@@ -1,10 +1,16 @@
 // var app = require('../express');
 
 module.exports = function (app) {
+    var mongoose = require('mongoose');
+    mongoose.Promise = require('q').Promise;
+    mongoose.createConnection('mongodb://127.0.0.1/webdev_assignment');
+
+
     require("./services/user.service.server.js")(app);
     require("./services/website.service.server.js")(app);
     require("./services/page.service.server.js")(app);
     require("./services/widget.service.server.js")(app);
+
 
     app.get('/goodbye', sayHello);
     app.get('/websites', sendWebsites);

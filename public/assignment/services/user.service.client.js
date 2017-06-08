@@ -14,12 +14,13 @@
         };
 
         function createUser(user) {
+            console.log("create did come to service client");
             var url = "/api/user";
             return $http
-                .post(url, user)
-                .then(function (response) {
-                    return response.data;
-                });
+                .post(url, user);
+                // .then(function (response) {
+                //     return response.data;
+                // });
         }
 
         function findUserByUsername(username) {
@@ -47,7 +48,7 @@
         }
 
         function findUserByCredentials(username, password) {
-            var url = "/api/user?username=" + username + "&password=" + password;
+            var url = "/api/assignment/user?username=" + username + "&password=" + password;
             return $http
                 .get(url)
                 .then(function (response) {

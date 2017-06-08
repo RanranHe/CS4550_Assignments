@@ -1,4 +1,4 @@
-module.exports = function (app) {
+module.exports = function (app, models) {
 
     app.get("/api/page/:pageId/widget", findWidgetsByPageId);
     app.post("/api/page/:pageId/widget", createWidget);

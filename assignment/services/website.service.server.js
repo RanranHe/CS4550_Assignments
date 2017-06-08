@@ -1,4 +1,4 @@
-module.exports = function (app) {
+module.exports = function (app, models) {
 
     app.post('/api/user/:userId/website', createWebsite);
     app.get('/api/user/:userId/website', findAllWebsitesForUser);

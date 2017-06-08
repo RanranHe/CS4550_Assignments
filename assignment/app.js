@@ -5,6 +5,13 @@ module.exports = function (app) {
     mongoose.Promise = require('q').Promise;
     mongoose.createConnection('mongodb://127.0.0.1/webdev_assignment');
 
+    if(process.env.MLAB_USERNAME_WEBDEV) { // check if running remotely
+        var username = process.env.MLAB_USERNAME_WEBDEV; // get from environment
+        var password = process.env.MLAB_PASSWORD_WEBDEV;
+        connectionString = 'mongodb://' + username + ':' + password;
+        connectionString += '@ds137281.mlab.com:37281/heroku_wzbmmppf'; // user yours
+    }
+    mongoose.connect(connectionString);
 
     require("./services/user.service.server.js")(app);
     require("./services/website.service.server.js")(app);

@@ -18,7 +18,7 @@
 
         function init() {
             PageService
-                .findAllPagesForUser(model.websiteId)
+                .findPagesByWebsiteId(model.websiteId)
                 .then(function (pages) {
                     model.pages = pages;
                 });
@@ -55,7 +55,7 @@
 
         function init() {
             PageService
-                .findAllPagesForUser(model.websiteId)
+                .findPagesByWebsiteId(model.websiteId)
                 .then(function (pages) {
                     model.pages = pages;
                 });
@@ -73,7 +73,7 @@
 
         function init() {
             PageService
-                .findAllPagesForUser(model.websiteId)
+                .findPagesByWebsiteId(model.websiteId)
                 .then(function (pages) {
                     model.pages = pages;
                 });

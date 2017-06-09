@@ -37,16 +37,6 @@ module.exports = function () {
     }
 
     function updateWebsite(websiteId, newWebsite) {
-        // // console.log("model newWebsite: " + newWebsite.name);
-        // console.log("model newWebsite: " + newWebsite.description);
-        // return websiteModel.update(
-        //     {_id: websiteId},
-        //     {$set: {
-        //         name: newWebsite.name,
-        //         description: newWebsite.description
-        //         }
-        //     });
-        console.log("model: " + newWebsite.name);
         return websiteModel.update(
             {_id: websiteId},
             {$set: newWebsite});

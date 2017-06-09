@@ -13,7 +13,7 @@
             createPage: createPage,
             updatePage: updatePage,
             deletePage: deletePage,
-            findAllPagesForUser: findAllPagesForUser
+            findPagesByWebsiteId: findPagesByWebsiteId
         };
 
         function createPage(websiteId, page) {
@@ -65,7 +65,7 @@
             return $http.delete(url);
         }
 
-        function findAllPagesForUser(websiteId) {
+        function findPagesByWebsiteId(websiteId) {
             var url = "/api/website/" + websiteId + "/page";
             return $http
                 .get(url)

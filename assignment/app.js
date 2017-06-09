@@ -3,7 +3,11 @@
 module.exports = function (app) {
     var mongoose = require('mongoose');
     mongoose.Promise = require('q').Promise;
+    // Local
     // mongoose.createConnection('mongodb://127.0.0.1/webdev_assignment');
+
+    // mLab
+
     var connectionString = 'mongodb://127.0.0.1/webdev_assignment';
 
     if(process.env.MLAB_USERNAME_WEBDEV) { // check if running remotely

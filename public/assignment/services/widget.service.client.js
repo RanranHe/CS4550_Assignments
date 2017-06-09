@@ -35,6 +35,7 @@
         }
 
         function createWidget(pageId, widget) {
+            console.log("service client: " + widget.widgetType);
             var url = "/api/page/" + pageId + "/widget";
             var data = {
                 pageId: pageId,
@@ -42,10 +43,10 @@
             };
 
             return $http
-                .post(url, data)
-                .then(function (response) {
-                    return response.data;
-                });
+                .post(url, data);
+                // .then(function (response) {
+                //     return response.data;
+                // });
         }
 
         function updateWidget(widgetId, widget) {

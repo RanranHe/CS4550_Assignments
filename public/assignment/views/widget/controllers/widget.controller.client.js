@@ -56,8 +56,8 @@
         function init() {
             WidgetService
                 .findWidgetsByPageId(model.pageId)
-                .then(function (widgets) {
-                    model.widgets = widgets;
+                .then(function (res) {
+                    model.widgets = res.data;
                 });
         }
 
@@ -65,16 +65,18 @@
 
         function createWidget(widgetType) {
             var newWidget = {
-                _id: (new Date()).getTime() + "",
                 name: "",
                 widgetType: widgetType,
                 pageId: model.pageId
             };
 
             WidgetService
-                .createWidget(model.pageId, newWidget);
-            $location.url("/user/" + model.userId + "/website/" + model.websiteId + "/page/" + model.pageId + "/widget/" + newWidget._id);
-            return newWidget;
+                .createWidget(model.pageId, newWidget)
+                .then(function (res) {
+                    var widget = res.data;
+                    $location.url("/user/" + model.userId + "/website/" + model.websiteId + "/page/" + model.pageId + "/widget/" + widget._id);
+                    return newWidget;
+                });
         }
     }
 

@@ -88,6 +88,7 @@
                 websiteId: model.websiteId,
                 description: description
             };
+            console.log(newPage._id);
             PageService
                 .createPage(model.websiteId, newPage)
                 .then(function () {

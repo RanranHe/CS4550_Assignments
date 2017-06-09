@@ -21,12 +21,13 @@
             };
             return $http
                 .post(url, data)
-                .then(function (response) {
-                    return response.data;
-                });
+                // .then(function (response) {
+                //     return response.data;
+                // });
         }
 
         function updateWebsite(websiteId, website) {
+            console.log("client website: " + website.name);
             var url = "/api/website/" + websiteId;
             return $http
                 .put(url, website)

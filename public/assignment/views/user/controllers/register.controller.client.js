@@ -9,7 +9,7 @@
 
         // event handlers
         model.register = function (username, password, password2) {
-            if (username === null || username === '[]' || typeof username === 'undefined') {
+            if (username === null || username === '' || typeof username === 'undefined') {
                 model.error = 'Invalid Empty Username!';
                 return;
             }
@@ -24,20 +24,20 @@
                 model.error = "Passwords not match!";
                 return;
             }
+
             userService
                 .findUserByUsername(username)
                 .then(checkUser);
 
-
-            function checkUser(user) {
-                if (user.username===null) {
+            function checkUser(found) {
+                if (found) {
                     model.error = "Username not available."
                 } else {
                     var newUser = {
                         username: username,
                         password: password
                     };
-                    console.log("newUser: " + newUser.username + "  " + newUser.password);
+
                     userService
                         .createUser(newUser)
                         .then(function (res) {

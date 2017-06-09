@@ -1,4 +1,5 @@
 module.exports = function (app, models) {
+    var websiteModel = models.websiteModel;
 
     app.post('/api/user/:userId/website', createWebsite);
     app.get('/api/user/:userId/website', findAllWebsitesForUser);

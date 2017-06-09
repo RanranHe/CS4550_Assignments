@@ -1,19 +1,19 @@
 /**
- * Created by Ranran on 2017/6/8.
+ * Created by Ranran on 2017/6/9.
  */
 module.exports = function () {
     var mongoose = require('mongoose');
-    var userSchema = require('./user.schema.server');
+    var websiteSchema = require('./website.schema.server');
 
-    var userModel = mongoose.model('users', userSchema);
+    var websiteModel = mongoose.model('websites', websiteSchema);
 
-    userModel.createUser = createUser;
-    userModel.findUserById = findUserById;
-    userModel.findUserByCredentials = findUserByCredentials;
-    userModel.deleteUser = deleteUser;
-    userModel.updateUser = updateUser;
+    websiteModel.createUser = createUser;
+    websiteModel.findUserById = findUserById;
+    websiteModel.findUserByCredentials = findUserByCredentials;
+    websiteModel.deleteUser = deleteUser;
+    websiteModel.updateUser = updateUser;
 
-    module.exports = userModel;
+    module.exports = websiteModel;
 
     return {
         createUser: createUser,

@@ -1,12 +1,12 @@
-module.exports = function (app) {
-    var userModel = require('../model/user/user.model.server')(app);
+module.exports = function (app, models) {
+    var userModel = models.userModel;
 
     app.get("/api/user/:userId", findUserById);
     app.get('/api/user/', findUserByUsername);
     app.get("/api/assignment/user/", findUserByCredentials);
     app.post('/api/user', createUser);
     app.put('/api/user/:userId', updateUser);
-    app.delete ('/api/user/:userId', deleteUser);
+    app.delete('/api/user/:userId', deleteUser);
 
 
     var users = [
@@ -16,21 +16,22 @@ module.exports = function (app) {
         {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi"}
     ];
 
-    function findUserByCredentials (req, res) {
+    function findUserByCredentials(req, res) {
         var username = req.query['username'];
         var password = req.query['password'];
-        console.log([username, password]);
 
         userModel
             .findUserByCredentials(username, password)
             .then(function (user) {
-                if(user !== null) {
+                if (user !== null) {
                     res.json(user);
                 } else {
-                    res.sendStatus(404);
+                    res.send(null);
+                    // res.sendStatus(404);
                 }
             }, function (err) {
-                res.sendStatus(404);
+                res.send(null);
+                // res.sendStatus(404);
             });
         // var username = req.query['username'];
         // var password = req.query['password'];
@@ -45,14 +46,17 @@ module.exports = function (app) {
         // res.send(null);
     }
 
-    function findUserByUsername (req, res) {
+    function findUserByUsername(req, res) {
         var username = req.query['username'];
-        console.log("service server username: " + username);
+
         userModel
             .findUserByUsername(username)
             .then(function (user) {
-                    res.json(user);
-                });
+                res.json(user);
+            }, function (err) {
+                // res.status(400).send(err);
+                res.send(null);
+            });
         // var username = req.query['username'];
         // for (var u in users) {
         //     var user = users[u];
@@ -74,7 +78,7 @@ module.exports = function (app) {
                     res.json(user);
                 },
                 function (err) {
-                    console.log(err);
+                    res.send(null);
                     // res.status(400).send(err);
                 }
             );
@@ -85,7 +89,7 @@ module.exports = function (app) {
         // res.send(user);
     }
 
-    function createUser (req, res) {
+    function createUser(req, res) {
         var user = req.body;
         userModel
             .createUser(user)
@@ -94,7 +98,7 @@ module.exports = function (app) {
             });
     }
 
-    function updateUser (req, res) {
+    function updateUser(req, res) {
         var id = req.body.id;
         var newUser = req.body.newUser;
         userModel
@@ -120,7 +124,7 @@ module.exports = function (app) {
         var id = req.params.userId;
         userModel
             .deleteUser(id)
-            .then(function(status) {
+            .then(function (status) {
                     res.sendStatus(200);
                 },
                 function (err) {

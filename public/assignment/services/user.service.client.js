@@ -14,7 +14,6 @@
         };
 
         function createUser(user) {
-            console.log("create did come to service client");
             var url = "/api/user";
             return $http
                 .post(url, user);

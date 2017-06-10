@@ -44,8 +44,8 @@ module.exports = function () {
     function updateUser(id, newUser) {
         return userModel.update(
             {_id: id},
-            {$set :
-                {
+            {
+                $set: {
                     firstName: newUser.firstName,
                     lastName: newUser.lastName
                 }

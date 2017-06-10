@@ -5,12 +5,15 @@ var mongoose = require('mongoose');
 module.exports = function () {
     var widgetSchema = require("./widget.schema.server");
     var widgetModel = mongoose.model("widgetModel", widgetSchema);
+    var pageModel = require('../page/page.model.server');
 
     widgetModel.createWidget = createWidget;
     widgetModel.findWidgetsByPageId = findWidgetsByPageId;
     widgetModel.findWidgetById = findWidgetById;
     widgetModel.updateWidget = updateWidget;
-    // widgetModel.deletePage = deletePage;
+    widgetModel.deleteWidget = deleteWidget;
+    widgetModel.reorderWidget = reorderWidget;
+    widgetModel.findWidgetsByIds = findWidgetsByIds;
 
     module.exports = widgetModel;
 
@@ -18,21 +21,31 @@ module.exports = function () {
         createWidget: createWidget,
         findWidgetsByPageId: findWidgetsByPageId,
         findWidgetById: findWidgetById,
-        updateWidget: updateWidget
+        updateWidget: updateWidget,
+        deleteWidget: deleteWidget,
+        reorderWidget: reorderWidget,
+        findWidgetsByIds: findWidgetsByIds
     };
 
     function createWidget(widget) {
-        return widgetModel.create(widget);
-
+        return widgetModel.create(widget)
+            .then(function (widget) {
+                var pageId = widget._page;
+                var widgetId = widget._id;
+                pageModel.addWidgetToArray(pageId, widgetId);
+                return widget;
+            })
     }
 
     function findWidgetsByPageId(pageId) {
-        return widgetModel.find({_page: pageId});
+        return pageModel.findPageById(pageId)
+            .then(function (page) {
+                return page._widgets;
+            })
     }
 
     function findWidgetById(widgetId) {
         return widgetModel.findOne({_id: widgetId});
-
     }
 
     function updateWidget(widgetId, widget) {
@@ -42,42 +55,31 @@ module.exports = function () {
     }
 
     function deleteWidget(widgetId) {
-        return Widget.remove({_id: widgetId});
+        return widgetModel.findWidgetById(widgetId)
+            .then(function (widget) {
+                var pageId = widget._page;
+                return widgetModel.remove({_id: widgetId})
+                    .then(function () {
+                        return pageModel.deleteWidgetFromArray(pageId, widgetId);
+                    })
+            })
     }
+
 
     function reorderWidget(pageId, start, end) {
-        start = parseInt(start);
-        end = parseInt(end);
-        return Widget
-            .find({_page: pageId}, function (err, widgets) {
-                widgets.forEach(function (widget) {
-                    if (start < end) {
-                        if (widget.order > start && widget.order <= end) {
-                            widget.order--;
-                            widget.save();
-                            console.log("1changed from " + (widget.order + 1) + "to --")
-                        } else if (widget.order === start) {
-                            widget.order = end;
-                            widget.save();
-                            console.log("2changed from " + (start) + "to" + end)
-
-                        }
-                    } else if (start > end) {
-                        if (widget.order >= end && widget.order < start) {
-                            widget.order++;
-                            widget.save();
-                            console.log("3changed from " + (widget.order - 1) + "to ++")
-
-                        }
-                        else if (widget.order === start) {
-                            widget.order = end;
-                            widget.save();
-                            console.log("4changed from " + (start) + "to" + end)
-
-                        }
-                    }
-                })
-            });
+        return pageModel
+            .findPageById(pageId)
+            .then(function (page) {
+                var widgets = page._widgets;
+                widgets.splice(end, 0, widgets.splice(start, 1)[0]);
+                page._widgets = widgets;
+                return pageModel.updatePage(pageId, page);
+            })
     }
 
+    function findWidgetsByIds(widgetIds) {
+        return widgetModel.find(
+            {_id: {$in: widgetIds}}
+        )
+    }
 };

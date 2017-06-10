@@ -11,6 +11,9 @@ module.exports = function () {
     pageModel.updatePage = updatePage;
     pageModel.findPageById = findPageById;
     pageModel.deletePage = deletePage;
+    // Helper function
+    pageModel.addWidgetToArray = addWidgetToArray;
+    pageModel.deleteWidgetFromArray = deleteWidgetFromArray;
 
     module.exports = pageModel;
 
@@ -19,12 +22,14 @@ module.exports = function () {
         findPagesByWebsiteId: findPagesByWebsiteId,
         updatePage: updatePage,
         findPageById: findPageById,
-        deletePage: deletePage
+        deletePage: deletePage,
+        // Helper function
+        addWidgetToArray: addWidgetToArray,
+        deleteWidgetFromArray: deleteWidgetFromArray
     };
 
     function createPage(page) {
-        return pageModel.create(page);
-
+        return pageModel.create(page)
     }
 
     function findPagesByWebsiteId(websiteId) {
@@ -38,7 +43,7 @@ module.exports = function () {
     }
 
     function updatePage(pageId, page) {
-       return pageModel.update(
+        return pageModel.update(
             {_id: pageId},
             {$set: page});
     }
@@ -46,5 +51,25 @@ module.exports = function () {
     function deletePage(pageId) {
         return pageModel.remove({_id: pageId});
 
+    }
+
+    ///////////// Helper function/////////////////
+
+    function addWidgetToArray(pageId, widgetId) {
+        return pageModel.findPageById(pageId)
+            .then(function (page) {
+                page._widgets.push(widgetId);
+                return page.save();
+            });
+    }
+
+    function deleteWidgetFromArray(pageId, widgetId) {
+        return pageModel
+            .findPageById(pageId)
+            .then(function (page) {
+                var index = page._widgets.indexOf(widgetId);
+                page._widgets.splice(index, 1);
+                return page.save();
+            })
     }
 };

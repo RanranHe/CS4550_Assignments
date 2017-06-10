@@ -46,7 +46,7 @@ module.exports = function (app, models) {
 
         websiteModel
             .updateWebsite(websiteId, website)
-            .then(function(response) {
+            .then(function (response) {
                 res.json(response);
             });
     }
@@ -76,12 +76,8 @@ module.exports = function (app, models) {
         websiteModel
             .createWebsite(website)
             .then(
-                function(website) {
+                function (website) {
                     res.sendStatus(200);
-                },
-                function (err) {
-                    // res.status(400).send(err);
-                }
-            );
+                });
     }
 };

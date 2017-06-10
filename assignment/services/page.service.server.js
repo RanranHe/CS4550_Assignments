@@ -45,7 +45,6 @@ module.exports = function (app, models) {
                 },
                 function (err) {
                     res.send(null);
-                    // res.status(400).send(err);
                 }
             );
     }

@@ -6,34 +6,51 @@ module.exports = function (app, models) {
     app.get("/api/widget/:widgetId", findWidgetById);
     app.put("/api/widget/:widgetId", updateWidget);
     app.delete("/api/widget/:widgetId", deleteWidget);
-    app.put('/page/:pageId/widget', sortWidget);
+    app.put('/api/page/:pageId/widget', reorderWidget);
 
     function createWidget(req, res) {
         var pageId = req.body.pageId;
         var widget = req.body;
 
-        var widgetType = req.body.widget.widgetType;
-        widget.widgetType = widgetType;
+        widget.widgetType = req.body.widget.widgetType;
         widget._page = pageId;
-
 
         widgetModel
             .createWidget(widget)
             .then(
                 function (widget) {
                     res.json(widget);
-                },
-                function (err) {
-                    // res.status(400).send(err);
-                }
-            );
+                });
     }
 
     function findWidgetsByPageId(req, res) {
+        var pageId = req.params['pageId'];
+
         widgetModel
-            .findWidgetsByPageId(req.params.pageId)
-            .then(function (widgets) {
-                res.json(widgets);
+            .findWidgetsByPageId(pageId)
+            .then(function (widgetIds) {
+                widgetModel
+                    .findWidgetsByIds(widgetIds)
+                    .then(function (widgets) {
+                        var finalHashWidgetList = getHashedList(widgets);
+                        // Helper function
+                        function getHashedList(widgets) {
+                            var hashWidgetList = [];
+                            for (var i in widgets) {
+                                hashWidgetList[widgets[i]._id] = widgets[i];
+                            }
+                            return hashWidgetList;
+                        }
+
+                        var widgetList = [];
+
+                        for (var i = 0; i < widgetIds.length; i++) {
+                            var widgetId = widgetIds[i];
+                            var widget = finalHashWidgetList[widgetId];
+                            widgetList.push(widget);
+                        }
+                        res.json(widgetList);
+                    })
             });
     }
 
@@ -45,11 +62,9 @@ module.exports = function (app, models) {
                 function (widget) {
                     res.json(widget);
                 },
-                function (err) {
+                function () {
                     res.send(null);
-                    // res.status(400).send(err);
-                }
-            );
+                });
     }
 
     function updateWidget(req, res) {
@@ -65,35 +80,29 @@ module.exports = function (app, models) {
 
     function deleteWidget(req, res) {
         var widgetId = req.params.widgetId;
-        for (var i in widgets) {
-            if (widgets[i]._id === widgetId) {
-                widgets.splice(i, 1);
+        widgetModel
+            .deleteWidget(widgetId)
+            .then(
+                function () {
+                    res.json(200);
+                },
+                function (err) {
+                    res.status(404).send(err);
+                });
+    }
+
+    function reorderWidget(req, res) {
+        var pageId = req.params['pageId'];
+        var start = parseInt(req.query.initial);
+        var end = parseInt(req.query.final);
+
+        widgetModel.reorderWidget(pageId, start, end)
+            .then(function () {
                 res.sendStatus(200);
-            }
-        }
+            });
     }
 
-    function sortWidget(req, res) {
-        var storedWidgets = [];
-
-        var initial = req.query['initial'];
-        var final = req.query['final'];
-
-        for (var i = widgets.length - 1; i >= 0; i--) {
-            if (widgets[i].pageId === req.params.pageId) {
-                storedWidgets.unshift(widgets[i]);
-                widgets.splice(i, 1);
-            }
-        }
-        var widget = storedWidgets[initial];
-        storedWidgets.splice(initial, 1);
-        storedWidgets.splice(final, 0, widget);
-        widgets = widgets.concat(storedWidgets);
-        res.sendStatus(200);
-    }
-
-
-    // For upload Image in widget-image
+    /////////////// Upload Image in Widget Image /////////////////////
 
     var multer = require('multer');
     var upload = multer({dest: __dirname + '/../../public/uploads'});
@@ -121,20 +130,19 @@ module.exports = function (app, models) {
         var widgetHolder;
         widgetModel
             .findWidgetById(widgetId)
-            .then(
-                function (widget) {
-                    widgetHolder = JSON.parse(JSON.stringify(widget));
-                    widgetHolder.url = "/uploads/" + filename;
+            .then(function (widget) {
+                widgetHolder = JSON.parse(JSON.stringify(widget));
+                widgetHolder.url = "/uploads/" + filename;
 
-                    widgetModel
-                        .updateWidget(widgetId, widgetHolder)
-                        .then(
-                            function (widget) {
-                                res.redirect("/assignment/index.html#!/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId);
-                            },
-                            function (err) {
-                                res.statusCode(400);
-                            })
-                })
+                widgetModel
+                    .updateWidget(widgetId, widgetHolder)
+                    .then(
+                        function (widget) {
+                            res.redirect("/assignment/index.html#!/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId);
+                        },
+                        function () {
+                            res.statusCode(400);
+                        })
+            })
     }
 };

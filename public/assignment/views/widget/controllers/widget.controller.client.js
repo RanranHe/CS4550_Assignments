@@ -10,7 +10,6 @@
         .controller("FlickrImageSearchController", FlickrImageSearchController);
 
 
-
     function WidgetListController($sce, $routeParams, WidgetService) {
         var model = this;
         model.getHtml = getHtml;

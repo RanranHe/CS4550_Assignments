@@ -15,11 +15,7 @@
 
         function createUser(user) {
             var url = "/api/user";
-            return $http
-                .post(url, user);
-                // .then(function (response) {
-                //     return response.data;
-                // });
+            return $http.post(url, user);
         }
 
         function findUserByUsername(username) {
@@ -32,8 +28,8 @@
         }
 
         function updateUser(userId, newUser) {
-            var url = "/api/user/"+ userId;
-            var data =  {
+            var url = "/api/user/" + userId;
+            var data = {
                 id: userId,
                 newUser: newUser
             };

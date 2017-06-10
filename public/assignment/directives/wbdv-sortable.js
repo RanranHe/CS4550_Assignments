@@ -3,47 +3,38 @@
  */
 (function () {
     angular
-        .module('WebAppMaker')
+        .module('wbdvDirectives', ['ngRoute'])
         .directive('wdDraggable', wdDraggable);
 
-    function wdDraggable(WidgetService) {
-        var initial = -1;
-        var final = -1;
-
-        function linkFunction(scope, element) {
-            $(element).sortable(
-                {
-                    axis: "y",
-                    scroll: false,
-                    start: function (event, ui) {
-                        initial = ui.item.index();
-                    },
-                    stop: function (event, ui) {
-                        final = ui.item.index();
-                        WidgetService
-                            .sortWidget(initial, final);
-                    }
-                }
-            )
-        }
-
-        function linkFunction(scope, element){
-            $(element).sortable(
-                {
-                axis: "y",
-                scroll: false,
-                start: function(event, ui) {
-                    initial = ui.item.index();
-                },
-                stop: function(event, ui) {
-                    final = ui.item.index();
-                    WidgetService
-                        .sortWidget(initial, final);
-                }
-            })
-        }
+    function wdDraggable() {
         return {
-            link: linkFunction
+            link: linkFunction,
+            controller: directiveController
+        };
+
+        function linkFunction(scope, element, attributes, directiveController) {
+            $(element).sortable({
+                start: function (event, ui) {
+                    ui.item.startPosition = ui.item.index();
+                },
+                update: function (event, ui) {
+                    var start = ui.item.startPosition;
+                    var end = ui.item.index();
+                    directiveController.reorderWidget(start, end);
+                },
+                axis: 'y',
+                cursor: "move"
+            });
+        }
+    }
+
+    function directiveController(WidgetService, $http, $routeParams) {
+        var model = this;
+        model.reorderWidget = reorderWidget;
+
+        function reorderWidget(start, end) {
+            var pageId = $routeParams['pid'];
+            WidgetService.reorderWidget(pageId, start, end)
         }
     }
 })();

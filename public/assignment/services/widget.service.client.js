@@ -13,7 +13,7 @@
             createWidget: createWidget,
             updateWidget: updateWidget,
             deleteWidget: deleteWidget,
-            sortWidget: sortWidget
+            reorderWidget: reorderWidget
         };
 
         function findWidgetById(widgetId) {
@@ -44,9 +44,6 @@
 
             return $http
                 .post(url, data);
-                // .then(function (response) {
-                //     return response.data;
-                // });
         }
 
         function updateWidget(widgetId, widget) {
@@ -71,9 +68,13 @@
                 });
         }
 
-        function sortWidget (initial, final) {
-            var url = "/page/"+ $routeParams['pid'] + "/widget?initial=" + initial + "&final=" + final;
-            return $http.put(url);
+        function reorderWidget(pageId, sIndex, eIndex) {
+            var url = '/api/page/' + pageId + '/widget?initial=' + sIndex + '&final=' + eIndex;
+            return $http
+                .put(url)
+                .then(function (response) {
+                    return response.data;
+                });
         }
     }
 })();

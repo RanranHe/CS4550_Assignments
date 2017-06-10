@@ -64,14 +64,5 @@
             var url = "/api/page/" + pageId;
             return $http.delete(url);
         }
-
-        function findPagesByWebsiteId(websiteId) {
-            var url = "/api/website/" + websiteId + "/page";
-            return $http
-                .get(url)
-                .then(function (response) {
-                    return response.data;
-                });
-        }
     }
 })();

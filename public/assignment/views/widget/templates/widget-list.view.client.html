@@ -16,8 +16,9 @@
 </nav>
 
 <div class="container-fluid">
-    <div class="fixed-distance" wd-draggable="">
-        <ul ng-repeat="widget in model.widgets"
+    <div class="fixed-distance"
+         wd-draggable="">
+        <ul ng-repeat="widget in model.widgets track by $index"
             ng-switch="widget.widgetType">
             <li ng-switch-when="HEADING" class="wd-content">
                 <div class="wd-widget">

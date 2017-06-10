@@ -19,11 +19,7 @@
                 userId: userId,
                 website: website
             };
-            return $http
-                .post(url, data)
-                // .then(function (response) {
-                //     return response.data;
-                // });
+            return $http.post(url, data)
         }
 
         function updateWebsite(websiteId, website) {

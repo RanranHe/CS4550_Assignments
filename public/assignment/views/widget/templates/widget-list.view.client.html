@@ -18,7 +18,7 @@
 <div class="container-fluid">
     <div class="fixed-distance"
          wd-draggable="">
-        <ul ng-repeat="widget in model.widgets track by $index"
+        <ul ng-repeat="widget in model.widgets"
             ng-switch="widget.widgetType">
             <li ng-switch-when="HEADING" class="wd-content">
                 <div class="wd-widget">
@@ -56,7 +56,7 @@
                 </div>
 
                 <div>
-                    <img ng-src="{{widget.url}}" width="{{widget.width}}">
+                    <img ng-src="{{widget.url}}">
                 </div>
             </li>
 
@@ -72,8 +72,7 @@
                     </div>
                 </div>
 
-                <div ng-bind-html="model.getHtml(widget)">
-                </div>
+                <div ng-bind-html="model.getHtml(widget)"></div>
             </li>
 
             <li ng-switch-when="YOUTUBE" class="wd-content">

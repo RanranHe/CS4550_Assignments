@@ -35,7 +35,6 @@
         }
 
         function createWidget(pageId, widget) {
-            console.log("service client: " + widget.widgetType);
             var url = "/api/page/" + pageId + "/widget";
             var data = {
                 pageId: pageId,

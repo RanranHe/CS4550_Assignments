@@ -10,7 +10,7 @@
         .controller("FlickrImageSearchController", FlickrImageSearchController);
 
 
-    function WidgetListController($sce, $routeParams, WidgetService) {
+    function WidgetListController($sce, $routeParams,$location , WidgetService) {
         var model = this;
         model.getHtml = getHtml;
         model.getUrl = getUrl;
@@ -74,7 +74,7 @@
                 .then(function (res) {
                     var widget = res.data;
                     $location.url("/user/" + model.userId + "/website/" + model.websiteId + "/page/" + model.pageId + "/widget/" + widget._id);
-                    return newWidget;
+                    return widget;
                 });
         }
     }
@@ -115,6 +115,9 @@
             }
             if (widgetType === "YOUTUBE") {
                 var template = 'views/widget/templates/widget-youtube.html';
+            }
+            if (widgetType === "HTML") {
+                var template = 'views/widget/templates/widget-html.html';
             }
             return template;
         }

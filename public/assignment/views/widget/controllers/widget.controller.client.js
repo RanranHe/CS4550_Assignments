@@ -31,8 +31,7 @@
         init();
 
         function getHtml(widget) {
-            var html = $sce.trustAsHtml(widget.text);
-            return html;
+            return $sce.trustAsHtml(widget.text);
         }
 
         function getUrl(widget) {

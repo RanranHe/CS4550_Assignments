@@ -75,7 +75,26 @@
                 <div ng-bind-html="model.getHtml(widget)"></div>
             </li>
 
-            <li ng-switch-when="YOUTUBE" class="wd-content">
+            <li ng-switch-when="YOUTUBE" class="wd-content youtube-widget">
+                <iframe width="{{widget.width}}"
+                        ng-src="{{model.getUrl(widget)}}"
+                        frameborder="0"
+                        allowfullscreen>
+                </iframe>
+
+                <div class="wd-widget">
+                    <div class="wd-toolbar">
+                        <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}">
+                            <span class="glyphicon glyphicon-cog"></span>
+                        </a>
+                        <a href="">
+                            <span class="glyphicon glyphicon-align-justify"></span>
+                        </a>
+                    </div>
+                </div>
+            </li>
+
+            <div ng-switch-when="TEXT">
                 <div class="wd-widget">
                     <div class="wd-toolbar">
                         <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}">
@@ -87,11 +106,24 @@
                     </div>
                 </div>
 
-                <iframe width="{{widget.width}}"
-                        ng-src="{{model.getUrl(widget)}}"
-                        frameborder="0"
-                        allowfullscreen></iframe>
-            </li>
+                <div ng-if="widget.formatted"
+                     text-angular
+                     ta-toolbar="[['h1','h2','h3'],
+                     ['bold','italics','underline','strikeThrough'],
+                     ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
+                     ['indent','outdent']]">
+                </div>
+
+                <input ng-if="!widget.formatted && (!widget.rows || widget.rows===1)"
+                       placeholder="{{widget.placeholder}}"
+                       class="form-control"/>
+
+                <textarea ng-if="!widget.formatted && (widget.rows > 1)"
+                          rows="{{widget.rows}}"
+                          placeholder="{{widget.placeholder}}"
+                          class="form-control">{{widget.text}}
+                </textarea>
+            </div>
 
             <li ng-switch-default class="wd-content">
                 <div class="wd-widget">
@@ -104,7 +136,6 @@
                         </a>
                     </div>
                 </div>
-
                 <div>
                     {{widget}}
                 </div>

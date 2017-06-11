@@ -118,6 +118,9 @@
             if (widgetType === "HTML") {
                 var template = 'views/widget/templates/widget-html.html';
             }
+            if (widgetType === "TEXT") {
+                var template = 'views/widget/templates/widget-text.html';
+            }
             return template;
         }
 

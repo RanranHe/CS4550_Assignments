@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 module.exports = function () {
     var pageSchema = require("./page.schema.server");
     var pageModel = mongoose.model("pageModel", pageSchema);
+    var websiteModel = require('../website/website.model.server');
 
     pageModel.createPage = createPage;
     pageModel.findPagesByWebsiteId = findPagesByWebsiteId;
@@ -29,7 +30,13 @@ module.exports = function () {
     };
 
     function createPage(page) {
-        return pageModel.create(page)
+        return pageModel
+            .create(page)
+            .then(function (page) {
+                var websiteId = page._website;
+                var pageId = page._id;
+                websiteModel.addPageToArray(websiteId, pageId);
+            })
     }
 
     function findPagesByWebsiteId(websiteId) {
@@ -49,8 +56,16 @@ module.exports = function () {
     }
 
     function deletePage(pageId) {
-        return pageModel.remove({_id: pageId});
-
+        return pageModel
+            .findPageById(pageId)
+            .then(function (page) {
+                var websiteId = page._website;
+                pageModel
+                    .remove({_id: pageId})
+                    .then(function () {
+                        return websiteModel.deletePageFromArray(websiteId, pageId)
+                    })
+            })
     }
 
     ///////////// Helper function/////////////////

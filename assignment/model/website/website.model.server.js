@@ -6,12 +6,15 @@ module.exports = function () {
     var websiteSchema = require('./website.schema.server');
 
     var websiteModel = mongoose.model('websites', websiteSchema);
+    var userModel = require('../user/user.model.server');
 
     websiteModel.createWebsite = createWebsite;
     websiteModel.findAllWebsitesForUser = findAllWebsitesForUser;
     websiteModel.findWebsiteById = findWebsiteById;
     websiteModel.updateWebsite = updateWebsite;
     websiteModel.deleteWebsite = deleteWebsite;
+    websiteModel.addPageToArray = addPageToArray;
+    websiteModel.deletePageFromArray = deletePageFromArray;
 
     module.exports = websiteModel;
 
@@ -20,12 +23,20 @@ module.exports = function () {
         findAllWebsitesForUser: findAllWebsitesForUser,
         findWebsiteById: findWebsiteById,
         updateWebsite: updateWebsite,
-        deleteWebsite: deleteWebsite
+        deleteWebsite: deleteWebsite,
+        addPageToArray: addPageToArray,
+        deletePageFromArray: deletePageFromArray
     };
 
 
     function createWebsite(website) {
-        return websiteModel.create(website);
+        return websiteModel
+            .create(website)
+            .then(function (website) {
+                var userId = website._user;
+                var websiteId = website._id;
+                userModel.addWebsiteToArray(userId, websiteId);
+            })
     }
 
     function findAllWebsitesForUser(userId) {
@@ -43,6 +54,37 @@ module.exports = function () {
     }
 
     function deleteWebsite(websiteId) {
-        return websiteModel.remove({_id: websiteId});
+        return websiteModel
+            .findWebsiteById(websiteId)
+            .then(function (website) {
+                var userId = website._user;
+                websiteModel
+                    .remove({_id: websiteId})
+                    .then(function () {
+                        return userModel.deleteWebsiteFromArray(userId, websiteId);
+                    })
+            })
+
+    }
+
+    ///////////// Helper function/////////////////
+
+    function addPageToArray(websiteId, pageId) {
+        return websiteModel
+            .findWebsiteById(websiteId)
+            .then(function (website) {
+                website._pages.push(pageId);
+                return website.save();
+            });
+    }
+
+    function deletePageFromArray(websiteId, pageId) {
+        return userModel
+            .findWebsiteById(websiteId)
+            .then(function (website) {
+                var index = website._pages.indexOf(pageId);
+                website._pages.splice(index, 1);
+                return website.save();
+            })
     }
 };

@@ -12,6 +12,9 @@ module.exports = function () {
     userModel.findUserByCredentials = findUserByCredentials;
     userModel.deleteUser = deleteUser;
     userModel.updateUser = updateUser;
+    // Helper Function
+    userModel.addWebsiteToArray = addWebsiteToArray;
+    userModel.deleteWebsiteFromArray = deleteWebsiteFromArray;
 
     module.exports = userModel;
 
@@ -21,7 +24,10 @@ module.exports = function () {
         findUserByUsername: findUserByUsername,
         findUserById: findUserById,
         updateUser: updateUser,
-        deleteUser: deleteUser
+        deleteUser: deleteUser,
+        // Helper Function
+        addWebsiteToArray: addWebsiteToArray,
+        deleteWebsiteFromArray: deleteWebsiteFromArray
     };
 
 
@@ -54,6 +60,27 @@ module.exports = function () {
     }
 
     function deleteUser(userId) {
-        return userModel.remove({_id: userId});
+        return userModel.remove({_id: userId})
+    }
+
+///////////// Helper function/////////////////
+
+    function addWebsiteToArray(userId, websiteId) {
+        return userModel
+            .findUserById(userId)
+            .then(function (user) {
+                user._websites.push(websiteId);
+                return user.save();
+            });
+    }
+
+    function deleteWebsiteFromArray(userId, websiteId) {
+        return userModel
+            .findUserById(userId)
+            .then(function (user) {
+                var index = user._websites.indexOf(websiteId);
+                user._websites.splice(index, 1);
+                return user.save();
+            })
     }
 };

@@ -1,9 +1,36 @@
+<!--<div class="fixed-distance list fixed-width">-->
+
+<!--<label for="text">Text</label>-->
+<!--<textarea class="form-control large-input"-->
+<!--placeholder="<p>HTML EXAMPLE</p>"-->
+<!--ng-model="model.widget.text"-->
+<!--id="text"></textarea>-->
+
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<div ng-model="model.widget.text"-->
+<!--text-angular-->
+<!--ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],-->
+<!--['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],-->
+<!--['indent','outdent'],['html']]">-->
+<!--</div>-->
+<!--</div>-->
 <div class="fixed-distance list fixed-width">
-    <div class="form-group">
-        <label for="text">Text</label>
-        <textarea class="form-control large-input"
-                  placeholder="<p>HTML EXAMPLE</p>"
-                  ng-model="model.widget.text"
-                  id="text"></textarea>
+    <div class="container-fluid">
+        <label for="name">Name</label>
+        <input id="name"
+               placeholder="html"
+               class="form-control"/>
+        <label for="htmlEditor">HTML</label>
+        <div class="form-group">
+            <div ng-model="model.editWidget.text"
+                 id="htmlEditor"
+                 text-angular
+                 ta-toolbar="[['h1','h2','h3'],
+                     ['bold','italics','underline','strikeThrough'],
+                     ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
+                     ['indent','outdent'],['html']]">
+            </div>
+        </div>
     </div>
 </div>

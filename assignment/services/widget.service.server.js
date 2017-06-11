@@ -9,6 +9,7 @@ module.exports = function (app, models) {
     app.put('/api/page/:pageId/widget', reorderWidget);
 
     function createWidget(req, res) {
+        console.log("did come here");
         var pageId = req.body.pageId;
         var widget = req.body;
 

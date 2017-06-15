@@ -77,50 +77,50 @@ module.exports = function (app, models) {
     }
 
 
-    var FacebookStrategy = require('passport-facebook').Strategy;
-    var facebookConfig = {
-        clientID     : process.env.FACEBOOK_CLIENT_ID,
-        clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
-        callbackURL  : process.env.FACEBOOK_CALLBACK_URL
-    };
-
-
-    app.get ('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-    app.get('/auth/facebook/callback',
-        passport.authenticate('facebook', {
-            successRedirect: '/assignment/index.html#!/user',
-            failureRedirect: '/assignment/index.html#!/login'
-        }));
-
-    passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
-
-    function facebookStrategy(token, refreshToken, profile, done) {
-        userModel
-            .findUserByFacebookId(profile.id)
-            .then(function (user) {
-                if (!user) {
-                    var newUser = {
-                        username: profile.displayName,
-                        facebook: {
-                            id: profile.id,
-                            token: token
-                        }
-                    };
-
-                    return userModel
-                        .createUser(newUser)
-                        .then(function (response) {
-                            return done(null, response);
-                        })
-                } else {
-                    return userModel
-                        .updateFacebookToken(user._id, profile.id, token)
-                        .then(function (response) {
-                            return done(null, user);
-                        })
-                }
-            })
-    }
+    // var FacebookStrategy = require('passport-facebook').Strategy;
+    // var facebookConfig = {
+    //     clientID     : process.env.FACEBOOK_CLIENT_ID,
+    //     clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
+    //     callbackURL  : process.env.FACEBOOK_CALLBACK_URL
+    // };
+    //
+    //
+    // app.get ('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+    // app.get('/auth/facebook/callback',
+    //     passport.authenticate('facebook', {
+    //         successRedirect: '/assignment/index.html#!/user',
+    //         failureRedirect: '/assignment/index.html#!/login'
+    //     }));
+    //
+    // passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
+    //
+    // function facebookStrategy(token, refreshToken, profile, done) {
+    //     userModel
+    //         .findUserByFacebookId(profile.id)
+    //         .then(function (user) {
+    //             if (!user) {
+    //                 var newUser = {
+    //                     username: profile.displayName,
+    //                     facebook: {
+    //                         id: profile.id,
+    //                         token: token
+    //                     }
+    //                 };
+    //
+    //                 return userModel
+    //                     .createUser(newUser)
+    //                     .then(function (response) {
+    //                         return done(null, response);
+    //                     })
+    //             } else {
+    //                 return userModel
+    //                     .updateFacebookToken(user._id, profile.id, token)
+    //                     .then(function (response) {
+    //                         return done(null, user);
+    //                     })
+    //             }
+    //         })
+    // }
     ////////////////////// Logout /////////////////////////
     function logout(req, res) {
         req.logout();

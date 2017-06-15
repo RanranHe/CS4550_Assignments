@@ -4,19 +4,19 @@ module.exports = function (app) {
     var mongoose = require('mongoose');
     mongoose.Promise = require('q').Promise;
     // Local
-    // mongoose.createConnection('mongodb://127.0.0.1/webdev_assignment');
+    mongoose.createConnection('mongodb://127.0.0.1/webdev_assignment');
 
     // mLab
 
-    var connectionString = 'mongodb://127.0.0.1/webdev_assignment';
-
-    if(process.env.MLAB_USERNAME_WEBDEV) { // check if running remotely
-        var username = process.env.MLAB_USERNAME_WEBDEV; // get from environment
-        var password = process.env.MLAB_PASSWORD_WEBDEV;
-        connectionString = 'mongodb://' + username + ':' + password;
-        connectionString += '@ds137281.mlab.com:37281/heroku_wzbmmppf'; // user yours
-    }
-    mongoose.createConnection(connectionString);
+    // var connectionString = 'mongodb://127.0.0.1/webdev_assignment';
+    //
+    // if(process.env.MLAB_USERNAME_WEBDEV) { // check if running remotely
+    //     var username = process.env.MLAB_USERNAME_WEBDEV; // get from environment
+    //     var password = process.env.MLAB_PASSWORD_WEBDEV;
+    //     connectionString = 'mongodb://' + username + ':' + password;
+    //     connectionString += '@ds137281.mlab.com:37281/heroku_wzbmmppf'; // user yours
+    // }
+    // mongoose.createConnection(connectionString);
 
     var models = require("./model/models.server")();
     require("./services/user.service.server.js")(app, models);

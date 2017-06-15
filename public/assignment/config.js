@@ -18,10 +18,22 @@
                 controller: 'registerController',
                 controllerAs: 'model'
             })
-            .when('/user/:uid', {
+            // .when("/profile", {
+            //     templateUrl: "views/user/profile.view.client.html",
+            //     controller: "ProfileController",
+            //     controllerAs: "model",
+            //     resolve: {
+            //         loggedin: checkLoggedin
+            //     }
+            // })
+
+            .when('/profile', {
                 templateUrl: 'views/user/templates/profile.view.client.html',
                 controller: 'profileController',
-                controllerAs: 'model'
+                controllerAs: 'model',
+                resolve: {
+                    currentUser: checkLoggedIn
+                }
             })
             .when('/user/:uid/website', {
                 templateUrl: 'views/website/templates/website-list.view.client.html',
@@ -73,5 +85,20 @@
                 controller: 'FlickrImageSearchController',
                 controllerAs: 'model'
             });
+
+        function checkLoggedIn($q, $location, userService) {
+            var deferred = $q.defer();
+            userService
+                .checkLoggedIn()
+                .then(function (currentUser) {
+                    if(currentUser === '0') {
+                        deferred.reject();
+                        $location.url('/login');
+                    } else {
+                        deferred.resolve(currentUser);
+                    }
+                });
+            return deferred.promise;
+        }
     }
 })();

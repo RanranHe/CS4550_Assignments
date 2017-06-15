@@ -1,6 +1,16 @@
 module.exports = function (app, models) {
     var userModel = models.userModel;
 
+    var passport = require('passport');
+    var LocalStrategy = require('passport-local').Strategy;
+    passport.use(new LocalStrategy(localStrategy));
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
+
+    app.post("/api/login", passport.authenticate('local'), login);
+    app.get   ('/api/checkLoggedIn', checkLoggedIn);
+    app.get("/api/loggedin", loggedin);
+
     app.get("/api/user/:userId", findUserById);
     app.get('/api/user/', findUserByUsername);
     app.get("/api/assignment/user/", findUserByCredentials);
@@ -8,14 +18,46 @@ module.exports = function (app, models) {
     app.put('/api/user/:userId', updateUser);
     app.delete('/api/user/:userId', deleteUser);
 
+    ////////////////////// Login /////////////////////////
+    function localStrategy(username, password, done) {
+        userModel
+            .findUserByCredentials(username, password)
+            .then(
+                function(user) {
+                    if (!user) {
+                        return done(null, false);
+                    }
+                    return done(null, user);
+                },
+                function(err) {
+                    if (err) { return done(err); }
+                }
+            );
+    }
 
-    var users = [
-        {_id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder"},
-        {_id: "234", username: "bob", password: "bob", firstName: "Bob", lastName: "Marley"},
-        {_id: "345", username: "charly", password: "charly", firstName: "Charly", lastName: "Garcia"},
-        {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi"}
-    ];
+    function login(req, res) {
+        console.log("post!!");
+        var user = req.user;
+        res.json(user);
+    }
 
+    function checkLoggedIn(req, res) {
+        if(req.isAuthenticated()) {
+            res.json(req.user);
+        } else {
+            res.send('0');
+        }
+    }
+
+    function loggedin(req, res) {
+        if (req.isAuthenticated()) {
+            res.json(req.user);
+        } else {
+            res.send('0');
+        }
+    }
+
+    //////////////////// Functions before ///////////////////////////
     function findUserByCredentials(req, res) {
         var username = req.query['username'];
         var password = req.query['password'];
@@ -93,6 +135,23 @@ module.exports = function (app, models) {
                     res.status(404).send("Unable to remove user");
 
                 });
+    }
+    /////////////////////////////////////////////////////////////////////////
+    function serializeUser(user, done) {
+        done(null, user);
+    }
+
+    function deserializeUser(user, done) {
+        userModel
+            .findUserById(user._id)
+            .then(
+                function(user){
+                    done(null, user);
+                },
+                function(err){
+                    done(err, null);
+                }
+            );
     }
 };
 

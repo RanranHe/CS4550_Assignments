@@ -4,25 +4,25 @@
         .controller('LoginController', LoginController);
 
     function LoginController($location, userService) {
-
         var model = this;
 
         model.login = function (username, password) {
+
             userService
-                .findUserByCredentials(username, password)
+                .login(username, password)
                 .then(login, handleError);
 
-            function handleError() {
-                model.message = "Username " + username + " not found. Please try again.";
+            function handleError(error) {
+                model.message = "Username " + username + " not found, please try again";
             }
 
             function login(found) {
-                if (found) {
-                    $location.url('/user/' + found._id);
+                if(found !== null) {
+                    $location.url('/profile');
                 } else {
-                    model.message = "Username " + username + " not found. Please try again.";
+                    model.message = "Username " + username + " not found, please try again";
                 }
             }
-        }
+        };
     }
 })();

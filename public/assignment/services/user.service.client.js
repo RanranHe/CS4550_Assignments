@@ -6,6 +6,8 @@
     function userService($http) {
         return {
             login: login,
+            logout: logout,
+            register: register,
             checkLoggedIn: checkLoggedIn,
             createUser: createUser,
             findUserByCredentials: findUserByCredentials,
@@ -15,6 +17,7 @@
             deleteUser: deleteUser
         };
 
+        ////////////////// Login ////////////////////
         function login(username, password) {
             var url = "/api/login";
             var credentials = {
@@ -35,7 +38,23 @@
                 });
         }
 
+        ////////////////// Logout ////////////////////
+        function logout() {
+            return $http.post("/api/logout");
+        }
 
+        ////////////////// Register ////////////////////
+        function register(user) {
+            var url = "/api/assignment/register";
+            return $http.post(url, user)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+
+
+        /////////////////////////////////////////////
         function createUser(user) {
             var url = "/api/user";
             return $http.post(url, user);

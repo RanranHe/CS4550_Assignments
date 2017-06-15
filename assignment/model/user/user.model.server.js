@@ -12,6 +12,7 @@ module.exports = function () {
     userModel.findUserByCredentials = findUserByCredentials;
     userModel.deleteUser = deleteUser;
     userModel.updateUser = updateUser;
+    userModel.findUserByFacebookId = findUserByFacebookId;
     // Helper Function
     userModel.addWebsiteToArray = addWebsiteToArray;
     userModel.deleteWebsiteFromArray = deleteWebsiteFromArray;
@@ -25,6 +26,7 @@ module.exports = function () {
         findUserById: findUserById,
         updateUser: updateUser,
         deleteUser: deleteUser,
+        findUserByFacebookId: findUserByFacebookId,
         // Helper Function
         addWebsiteToArray: addWebsiteToArray,
         deleteWebsiteFromArray: deleteWebsiteFromArray
@@ -61,6 +63,10 @@ module.exports = function () {
 
     function deleteUser(userId) {
         return userModel.remove({_id: userId})
+    }
+
+    function findUserByFacebookId(facebookId) {
+        return userModel.findOne({'facebook.id': facebookId});
     }
 
 ///////////// Helper function/////////////////

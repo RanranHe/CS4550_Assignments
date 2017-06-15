@@ -18,15 +18,6 @@
                 controller: 'registerController',
                 controllerAs: 'model'
             })
-            // .when("/profile", {
-            //     templateUrl: "views/user/profile.view.client.html",
-            //     controller: "ProfileController",
-            //     controllerAs: "model",
-            //     resolve: {
-            //         loggedin: checkLoggedin
-            //     }
-            // })
-
             .when('/profile', {
                 templateUrl: 'views/user/templates/profile.view.client.html',
                 controller: 'profileController',

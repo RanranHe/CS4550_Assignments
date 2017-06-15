@@ -7,8 +7,11 @@ var userSchema = mongoose.Schema({
     password: {type: String, require: true},
     firstName: String,
     lastName: String,
+    facebook: {
+        id:    String,
+        token: String
+    },
     _websites: [{type: mongoose.Schema.Types.ObjectId, ref: 'websiteModel'}],
     dateCreated: {type: Date, default: Date.now}
 }, {collection: "webdev_assignment.users"});
-
 module.exports = userSchema;

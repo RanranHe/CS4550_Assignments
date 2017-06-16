@@ -69,6 +69,7 @@ module.exports = function () {
         return userModel.findOne({'facebook.id': facebookId});
     }
 
+
 ///////////// Helper function/////////////////
 
     function addWebsiteToArray(userId, websiteId) {

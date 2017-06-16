@@ -27,38 +27,23 @@
 
             var found = null;//userService.findUserByUsername(username);
 
-            if(found !== null) {
-                model.error = "Username is not available";
-            } else {
-                var user = {
-                    username: username,
-                    password: password
-                };
-                // model.message = user;
-                userService
-                    .register(user)
-                    .then(function (user) {
-                        $location.url('/profile');
-                    });
-            }
-            // userService
-            //     .register(username)
-            //     .then(function (found) {
-            //         if (found) {
-            //             model.error = "Username not available."
-            //         } else {
-            //             var newUser = {
-            //                 username: username,
-            //                 password: password
-            //             };
-            //
-            //             userService
-            //                 .createUser(newUser)
-            //                 .then(function (res) {
-            //                     $location.url("/register");
-            //                 });
-            //         }
-            //     });
+            userService
+                .findUserByUsername(username)
+                .then (function (found) {
+                    if(found !== null) {
+                        model.error = "Username is not available";
+                    } else {
+                        var user = {
+                            username: username,
+                            password: password
+                        };
+                        userService
+                            .register(user)
+                            .then(function (user) {
+                                $location.url('/profile');
+                            });
+                    }
+                })
         }
     }
 })();

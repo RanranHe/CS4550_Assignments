@@ -1,35 +1,38 @@
 module.exports = function (app, models) {
     var userModel = models.userModel;
-    //
-    // var facebookConfig = {
-    //     clientID: process.env.FACEBOOK_CLIENT_ID,
-    //     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    //     callbackURL: process.env.FACEBOOK_CALLBACK_URL,
-    //     profileFields: ['id', 'last_name', 'first_name', 'email']
-    // };
-
-    var passport = require('passport');
-    var LocalStrategy = require('passport-local').Strategy;
-    // var FacebookStrategy = require('passport-facebook').Strategy;
 
     var bcrypt = require("bcrypt-nodejs");
 
+    ///////////////////// For security of User part //////////////////////
+    var passport = require('passport');
+    var LocalStrategy = require('passport-local').Strategy;
     passport.use(new LocalStrategy(localStrategy));
-    // passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 
-    // app.get ('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+    ///////////////////// For Facebook Login ///////////////////////////
+    var FacebookStrategy = require('passport-facebook').Strategy;
+    var facebookConfig = {
+        clientID: process.env.FACEBOOK_CLIENT_ID,
+        clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+        callbackURL: process.env.FACEBOOK_CALLBACK_URL
+    };
+    passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
+
+    ///////////////////// For security of User part //////////////////////
     app.post("/api/login", passport.authenticate('local'), login);
-    // app.get('/auth/facebook/callback',
-    //     passport.authenticate('facebook', {
-    //         successRedirect: '/assignment/#/profile',
-    //         failureRedirect: '/assignment/#/login'
-    //     }));
     app.get('/api/checkLoggedIn', checkLoggedIn);
     app.get("/api/loggedin", loggedin);
     app.post("/api/logout", logout);
-    app.post ('/api/assignment/register', register);
+    app.post('/api/assignment/register', register);
+
+    ///////////////////// For Facebook Login ///////////////////////////
+    app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect: '/assignment/index.html#!/profile',
+            failureRedirect: '/#!/login'
+        }));
 
     app.get("/api/user/:userId", findUserById);
     app.get('/api/user/', findUserByUsername);
@@ -43,14 +46,16 @@ module.exports = function (app, models) {
         userModel
             .findUserByCredentials(username, password)
             .then(
-                function(user) {
+                function (user) {
                     if (!user) {
                         return done(null, false);
                     }
                     return done(null, user);
                 },
-                function(err) {
-                    if (err) { return done(err); }
+                function (err) {
+                    if (err) {
+                        return done(err);
+                    }
                 }
             );
     }
@@ -61,7 +66,7 @@ module.exports = function (app, models) {
     }
 
     function checkLoggedIn(req, res) {
-        if(req.isAuthenticated()) {
+        if (req.isAuthenticated()) {
             res.json(req.user);
         } else {
             res.send('0');
@@ -76,51 +81,39 @@ module.exports = function (app, models) {
         }
     }
 
+    function facebookStrategy(token, refreshToken, profile, done) {
+        userModel
+            .findUserByFacebookId(profile.id)
+            .then(function (user) {
+                    if (user) {
+                        return done(null, user);
+                    } else {
+                        var newFacebookUser = {
+                            username: profile.displayName,
+                            facebook: {
+                                id: profile.id,
+                                token: token
+                            }
+                        };
+                        return userModel.createUser(newFacebookUser);
+                    }
+                },
+                function (err) {
+                    if (err) {
+                        return done(err);
+                    }
+                })
+            .then(function (user) {
+                    return done(null, user);
+                },
+                function (err) {
+                    if (err) {
+                        return done(err);
+                    }
+                });
+    }
 
-    // var FacebookStrategy = require('passport-facebook').Strategy;
-    // var facebookConfig = {
-    //     clientID     : process.env.FACEBOOK_CLIENT_ID,
-    //     clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
-    //     callbackURL  : process.env.FACEBOOK_CALLBACK_URL
-    // };
-    //
-    //
-    // app.get ('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-    // app.get('/auth/facebook/callback',
-    //     passport.authenticate('facebook', {
-    //         successRedirect: '/assignment/index.html#!/user',
-    //         failureRedirect: '/assignment/index.html#!/login'
-    //     }));
-    //
-    // passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
-    //
-    // function facebookStrategy(token, refreshToken, profile, done) {
-    //     userModel
-    //         .findUserByFacebookId(profile.id)
-    //         .then(function (user) {
-    //             if (!user) {
-    //                 var newUser = {
-    //                     username: profile.displayName,
-    //                     facebook: {
-    //                         id: profile.id,
-    //                         token: token
-    //                     }
-    //                 };
-    //
-    //                 return userModel
-    //                     .createUser(newUser)
-    //                     .then(function (response) {
-    //                         return done(null, response);
-    //                     })
-    //             } else {
-    //                 return userModel
-    //                     .updateFacebookToken(user._id, profile.id, token)
-    //                     .then(function (response) {
-    //                         return done(null, user);
-    //                     })
-    //             }
-    //         })
-    // }
+
     ////////////////////// Logout /////////////////////////
     function logout(req, res) {
         req.logout();
@@ -218,6 +211,7 @@ module.exports = function (app, models) {
 
                 });
     }
+
     /////////////////////////////////////////////////////////////////////////
     function serializeUser(user, done) {
         done(null, user);
@@ -227,10 +221,10 @@ module.exports = function (app, models) {
         userModel
             .findUserById(user._id)
             .then(
-                function(user){
+                function (user) {
                     done(null, user);
                 },
-                function(err){
+                function (err) {
                     done(err, null);
                 }
             );

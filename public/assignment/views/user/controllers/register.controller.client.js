@@ -34,7 +34,7 @@
                 model.checkPassword1 = false;
                 return;
             }
-            if (usernameCheck && password1Check && password2Check) {
+            if (usernameCheck && password2Check) {
                 model.checkUsername = false;
                 model.checkPassword2 = false;
                 return;

@@ -15,6 +15,7 @@
            ng-model="username"
            class="form-control"
            placeholder="Username">
+    <p class="alert alert-danger" ng-show="!model.checkUsername">* required</p>
 
     <label>Password</label>
     <input type="password"
@@ -22,6 +23,7 @@
            ng-model="password"
            id="password"
            placeholder="Password">
+    <p class="alert alert-danger" ng-show="!model.checkPassword1">* required</p>
 
     <label>Verify Password</label>
     <input type="password"
@@ -29,6 +31,8 @@
            ng-model="password2"
            id="v-password"
            placeholder="Verify Password">
+    <p class="alert alert-danger" ng-show="!model.checkPassword2 ">* required</p>
+    <p class="alert alert-danger" ng-show="!model.checkPasswordMatch">* require match</p>
 
     <div class="btn-fixed">
         <a ng-click="model.register(username, password, password2)"

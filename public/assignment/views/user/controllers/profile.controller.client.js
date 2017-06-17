@@ -17,6 +17,7 @@
         init();
 
         function updateUser() {
+            console.log(model.user.email);
             userService
                 .updateUser(model.user._id, model.user)
                 .then(function () {

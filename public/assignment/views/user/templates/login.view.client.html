@@ -12,6 +12,7 @@
            type="text"
            class="form-control"
            placeholder="Username">
+    <p class="alert alert-danger" ng-show="!model.checkUsername">* required</p>
 
     <label>Password</label>
     <input ng-model="password"
@@ -19,6 +20,7 @@
            type="password"
            id="password"
            placeholder="Password">
+    <p class="alert alert-danger" ng-show="!model.checkPassword">* required</p>
 
     <a ng-click="model.login(username, password)" class="btn btn-block btn-primary">Login</a>
     <a href="/auth/facebook" class="btn btn-primary btn-block">

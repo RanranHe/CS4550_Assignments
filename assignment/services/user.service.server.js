@@ -44,20 +44,16 @@ module.exports = function (app, models) {
     ////////////////////// Login /////////////////////////
     function localStrategy(username, password, done) {
         userModel
-            .findUserByCredentials(username, password)
-            .then(
-                function (user) {
-                    if (!user) {
-                        return done(null, false);
-                    }
-                    return done(null, user);
-                },
-                function (err) {
-                    if (err) {
-                        return done(err);
-                    }
+            .findUserByUsername(username)
+            .then(function (user) {
+                if (user && bcrypt.compareSync(password, user.password)) {
+                    done(null, user);
+                } else {
+                    done(null, false);
                 }
-            );
+            }, function (error) {
+                done(error, false);
+            })
     }
 
     function login(req, res) {
@@ -123,6 +119,7 @@ module.exports = function (app, models) {
     ////////////////////// Register/////////////////////////
     function register(req, res) {
         var user = req.body;
+        user.password = bcrypt.hashSync(user.password);
         userModel
             .createUser(user)
             .then(function (user) {

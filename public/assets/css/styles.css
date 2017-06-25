@@ -291,6 +291,9 @@ p {
     top: 1px;
   }
 
+  .middle {
+    text-align: center;
+  }
 
 }
 /* Large devices (large desktops, 1200px and up) */
